@@ -7,5 +7,5 @@ alt: image-alt
 project-date: May 2023
 client: Young Adults
 category: Web Development
-description: The matches feature allows you to find people in the same area and with interests as you, to see who you want to rizz up to be your future soulmate! Click here to rizz up your match!
+description: The matches feature allows you to find people in the same area and with interests as you, to see who you want to rizz up to be your future soulmate! Click here to rizz up your match
 ---
