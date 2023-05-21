@@ -9,7 +9,7 @@ img: reviews.png
     <tr>
       <th>Header</th>
       <th>Another Header</th>
-    </tr>
+    </tr>s
   </thead>
   <tbody>
     <tr>
