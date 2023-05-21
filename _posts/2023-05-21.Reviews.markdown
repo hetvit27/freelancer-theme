@@ -1,20 +1,11 @@
 ---
 layout: default
 modal-id: 3
-date: 2023-05-21
+date: 2023-05-16
 img: reviews.png
+alt: image-alt
+project-date: May 2023
+client: Young Adults
+category: Web Development
+description: This feature allows you to leave review on our site.
 ---
-<table>
-  <thead>
-    <tr>
-      <th>Header</th>
-      <th>Another Header</th>
-    </tr>s
-  </thead>
-  <tbody>
-    <tr>
-      <td>field 1</td>
-      <td>value one</td>
-    </tr>
-  </tbody>
-</table>
