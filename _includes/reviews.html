@@ -5,64 +5,54 @@
     <br>
     <br>
     <br>
-<!DOCTYPE html>
-<html>
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <style>
+    .container {
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .box {
+      width: 100px;
+      height: 100px;
+      background-color: pink;
+      border-radius: 10px;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    </style>
+    </head>
+    <body>
+    <div class="container">
+      <div class="box">Review</div>
+      <div class="box">Review</div>
+      <div class="box">Review</div>
+      <div class="box">Review</div>
+    </div>
+</body>
 <head>
 <style>
-.box {
-  width: 100px;
-  height: 100px;
-  background-color: pink;
-  border-radius: 10px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  display: inline-block;
-  margin: 10px;
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: 'Caveat', cursive;
+  font-size: 48px;
+  text-transform: uppercase;
 }
-
-.cute {
-  background-color: lightblue;
-  border-radius: 50%;
-}
-
-.heart {
-  background-color: red;
-  transform: rotate(-45deg);
-}
-
-.star {
-  background-color: yellow;
-  position: relative;
-}
-
-.star:before,
-.star:after {
-  content: '';
-  position: absolute;
-  top: -20px;
-  width: 0;
-  height: 0;
-  border-left: 15px solid transparent;
-  border-right: 15px solid transparent;
-}
-
-.star:before {
-  border-bottom: 15px solid yellow;
-}
-
-.star:after {
-  top: 5px;
-  border-top: 15px solid yellow;
-}
-
 </style>
+<link href="https://fonts.googleapis.com/css?family=Caveat" rel="stylesheet">
 </head>
 <body>
-
-<div class="box"></div>
-<div class="box cute"></div>
-<div class="box cute heart"></div>
-<div class="box cute star"></div>
-
+  <div>Reviews</div>
 </body>
 </html>
 </section>
