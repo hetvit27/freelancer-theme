@@ -150,7 +150,7 @@
       const password = document.getElementById("password").value;
       const dob = document.getElementById("dob").value;
 
-      const url = "https://abopsc-backend.dontntntnt.de/api/person/post/";
+      const url = "https://dating.dontntntnt.de/api/person/post/";
 
       var details = {
         email: email,
@@ -184,7 +184,7 @@
         .then((result) => {
           console.log(result);
           window.location.href =
-            "https://deimie.github.io/temp/pages/userControl.html";
+            "https://hetvit27.github.io/freelancer-theme/dating/userControl/";
         })
         .catch((error) => console.log("error", error));
     }
@@ -211,7 +211,7 @@
       console.log(username);
       console.log(password);
 
-      const url = "https://abopsc-backend.dontntntnt.de/authenticate/";
+      const url = "https://dating.dontntntnt.de/authenticate/";
 
       const options = {
         method: "POST",
@@ -244,7 +244,7 @@
         };
 
         fetch(
-          "https://abopsc-backend.dontntntnt.de/api/person/getPersonName?email=" +
+          "https://dating.dontntntnt.de/api/person/getPersonName?email=" +
             username,
           requestOptions
         )
@@ -254,14 +254,15 @@
             sessionStorage.setItem("email", username);
             sessionStorage.setItem("username", text);
 
-            window.location.href = "https://deimie.github.io/temp/";
+            window.location.href =
+              "https://hetvit27.github.io/freelancer-theme/";
           })
           .catch((error) => console.log("error", error));
 
         let authorized = false;
 
         fetch(
-          "https://abopsc-backend.dontntntnt.de/api/person/getPersonRoles?email=" +
+          "https://dating.dontntntnt.de/api/person/getPersonRoles?email=" +
             username,
           requestOptions
         )
@@ -276,7 +277,7 @@
             }
             sessionStorage.setItem("authorized", authorized);
             fetch(
-              "https://abopsc-backend.dontntntnt.de/api/person/getPersonRoles?email=" +
+              "https://dating.dontntntnt.de/api/person/getPersonRoles?email=" +
                 username,
               requestOptions
             )
@@ -312,7 +313,7 @@
       sessionStorage.setItem("email", null);
       sessionStorage.setItem("authorized", false);
       sessionStorage.setItem("role", null);
-      window.location.href = "https://deimie.github.io/temp/";
+      window.location.href = "https://hetvit27.github.io/freelancer-theme/";
     }
   </script>
 </section>
