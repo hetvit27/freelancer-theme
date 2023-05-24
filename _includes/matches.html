@@ -1,89 +1,111 @@
-<style>
-  table {
-      border-collapse: collapse;
-  }
-  td {
-      border-right: solid 2px white;
-      border-bottom: solid 0px;
-  }
-
-</style>
-
 <section>
-    <table>
-        <tr>
-          <th>Test</th>
-          <th>Test2</th>
-          <th>Test3</th>
-        </tr>
-        <tr>
-          <td>Alfreds Futterkiste</td>
-          <td>Maria Anders</td>
-          <td>Germany</td>
-        </tr>
-        <tr>
-          <td>Centro comercial Moctezuma</td>
-          <td>Francisco Chang</td>
-          <td>Mexico</td>
-        </tr>
-      </table>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <!DOCTYPE html>
+  <html>
+  <head>
+  <style>
+  .container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .box {
+    width: 200px;
+    height: 200px;
+    background-color: pink;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  .form-container {
+    max-width: 400px;
+    margin: 20px auto;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .label {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: pink;
+  }
+  
+  .input-field {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid pink;
+    border-radius: 5px;
+  }
+  
+  .submit-button {
+    background-color: pink;
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  </style>
+  <script>
+  function generateBoxes() {
+    var name = document.getElementById("name").value;
+    var age = document.getElementById("age").value;
+    var location = document.getElementById("location").value;
+    var pronouns = document.getElementById("pronouns").value;
+  
+    var container = document.getElementById("box-container");
+    container.innerHTML = ""; // Clear previous boxes
+  
+    for (var i = 0; i < 4; i++) {
+      var box = document.createElement("div");
+      box.classList.add("box");
+      box.innerText = "Name: " + name + "\nAge: " + age + "\nLocation: " + location + "\nPronouns: " + pronouns;
+      container.appendChild(box);
+    }
+  }
+  </script>
+  </head>
+  <body>
+  <div class="container" id="box-container"></div>
+  
+  <div class="form-container">
+    <form onsubmit="event.preventDefault(); generateBoxes();">
+      <div class="form-group">
+        <label class="label" for="name">Name:</label>
+        <input class="input-field" type="text" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label class="label" for="age">Age:</label>
+        <input class="input-field" type="number" id="age" name="age" required>
+      </div>
+      <div class="form-group">
+        <label class="label" for="location">Location:</label>
+        <textarea class="input-field" type="text" id="location" name="location" required></textarea>
+      </div>
+      <div class="form-group">
+        <label class="label" for="pronouns">Prounouns:</label>
+        <input class="input-field" type="text" id="pronouns" name="pronouns" required>
+      </div>
+      <button class="submit-button" type="submit">Submit</button>
+    </form>
+  </div>
+  </body>
+  </html>    
 </section>
 
-<head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-</head>
-
-<h1>Matches</h1>
-
-<h3>find you possible soulmate and rizz them up!</h3>
-
-<!-- Create inputs for search and question -->
-<br><br>
-<input id="search" placeholder="Search">
-<button onclick="search()">Search</button>
-<select id="filter">
-	<option>Filter by...</option>
-	<option>location</option>
-	<option>age</option>
-	<option>college</option>
-  <option>pronouns</option>
-</select>
-<br><br>
-
-
-<input id="location" placeholder="location">
-<input id="age" placeholder="age">
-<input id="college" placeholder="college">
-<input id="pronouns" placeholder="pronouns">
-<button onclick="addDisc()">Post</button>
-<input type = "checkbox"> anonymous post
-
-
-<br><br>
-
-<input id="id" placeholder="ID">
-<button onclick="delete()">Delete</button>
-
-
-<br><br>
-
-<input id="id" placeholder="ID">
-<input id="location" placeholder="location">
-<input id="age" placeholder="age">
-<input id="college" placeholder="college">
-<input id="pronouns" placeholder="pronouns">
-<button onclick="update()">Update</button>
-
-
-<br><br>
-
-<!-- Create table to display question posts -->
-<table id="matchesTable" border="1" style="border-collapse: collapse;">
-		<tr>
-				<th>Id</th>
-				<th>location</th>
-				<th>age</th>
-				<th>college</th>
-				<th>pronouns</th>
-		</tr>
-</table>
