@@ -1,4 +1,8 @@
 <section>
+  <br>
+  <br>
+  <br>
+  <br>
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
   </head>
@@ -13,30 +17,25 @@
   <button onclick="addReview()">Save</button>
   <br>
   <br>
-  
   <!-- Create table to display question posts -->
-  
   <table id="reviewTable" border="1" style="border-collapse: collapse;">
-      <tr>
-          <th>Reviewer Name</th>
-          <th>Age</th>
-          <th>Review</th>
-          <th>Contact</th>
-      </tr>
+    <tr>
+      <th>Reviewer Name</th>
+      <th>Age</th>
+      <th>Review</th>
+      <th>Contact</th>
+    </tr>
   </table>
   <script>
     Review();
     function Review() {
       const options = {
-                  method: 'GET', // *GET, POST, PUT, DELETE, etc.
-                  // mode: 'cors', // no-cors, *cors, same-origin
-                  cache: 'default', // *default, no-cache, reload, force-cache, only-if-cached
-                  // credentials: 'same-origin', // include, same-origin, omit
-                  headers: {
-                  'Content-Type': 'application/json'
-                  // 'Content-Type': 'application/x-www-form-urlencoded',
-                  },
-              };
+        method: 'GET',
+        cache: 'default',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      };
       const url = "https://dating.dontntntnt.de/api/review/";
       fetch(url, options)
         .then(res => res.json())
@@ -44,76 +43,59 @@
           console.log(data);
           console.log(typeof data);
           console.log(JSON.stringify(data));
-      for (let i = 0; i < data.length; i++) {
-        addTableRow(data[i].reviewername, data[i].age, data[i].reviewtext, data[i].contact);
-      }
+          for (let i = 0; i < data.length; i++) {
+            addTableRow(data[i].reviewername, data[i].age, data[i].reviewtext, data[i].contact);
+          }
         });
     }
-  
     function addReview() {
-    const postOptions = {
-                  method: 'POST', // *GET, POST, PUT, DELETE, etc.
-                  // mode: 'cors', // no-cors, *cors, same-origin
-                  cache: 'default', // *default, no-cache, reload, force-cache, only-if-cached
-                  // credentials: 'same-origin', // include, same-origin, omit
-                  headers: {
-                  'Content-Type': 'application/json'
-                  // 'Content-Type': 'application/x-www-form-urlencoded',
-                  },
-              };
-    // var problemData = new URLSearchParams();
-    // problemData.append(`problem`, document.getElementById("question").value);
-    // problemData.append(`Unit`, document.getElementById("unit").value);
-    // problemData.append(`Topic`, document.getElementById("topic").value);
-    // problemData.append(`Tags`, document.getElementById("tags").value);
-    var url = "https://dating.dontntntnt.de/api/review/add";
-    url += "?name=" + document.getElementById("reviewername").value;
-    url += "&Age=" + document.getElementById("age").value;
-    url += "&Review=" + document.getElementById("reviewtext").value;
-    url += "&Contact=" + document.getElementById("contact").value;
-    // fetch the API
-    fetch(url, postOptions)
-    // response is a RESTful "promise" on any successful fetch
-    .then(response => {
-    // check for response errors
-    if (response.status !== 200) {
-      error("PUT API response failure: " + response.status)
-      return;  // api failure
-    }
-    // valid response will have JSON data
-    response.json().then(data => {
-      console.log(data);
-    })
-    })
-    // catch fetch errors (ie Nginx ACCESS to server blocked)
-    .catch(err => {
-    console.log(err + " ");
-    });
+      const postOptions = {
+        method: 'POST',
+        cache: 'default',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      };
+      var url = "https://dating.dontntntnt.de/api/review/add";
+      url += "?name=" + document.getElementById("reviewername").value;
+      url += "&Age=" + document.getElementById("age").value;
+      url += "&Review=" + document.getElementById("reviewtext").value;
+      url += "&Contact=" + document.getElementById("contact").value;
+      fetch(url, postOptions)
+        .then(response => {
+          if (response.status !== 200) {
+            error("PUT API response failure: " + response.status);
+            return;
+          }
+          response.json().then(data => {
+            console.log(data);
+          });
+        })
+        .catch(err => {
+          console.log(err + " ");
+        });
     }
     function addTableRow(reviewername, age, reviewtext, contact) {
-    /// let tableRow = document.createElement("tr");
-    /// let idCell = document.createElement("td");
-    /// tableRow.appendChild(idCell);
-    let reviewernameCell = document.createElement("td");
-    reviewernameCell.innerText = reviewername;
-    tableRow.appendChild(reviewernameCell);
-    let ageCell = document.createElement("td");
-    ageCell.innerText = age;
-    tableRow.appendChild(ageCell);
-    let reviewtextCell = document.createElement("td");
-    reviewtextCell.innerText = reviewtext;
-    tableRow.appendChild(reviewtextCell);
-    let contactCell = document.createElement("td");
-    contactCell.innerText = contact;
-    tableRow.appendChild(contactCell);
-    document.getElementById("reviewTable").appendChild(tableRow);
+      let tableRow = document.createElement("tr");
+      let reviewernameCell = document.createElement("td");
+      reviewernameCell.innerText = reviewername;
+      tableRow.appendChild(reviewernameCell);
+      let ageCell = document.createElement("td");
+      ageCell.innerText = age;
+      tableRow.appendChild(ageCell);
+      let reviewtextCell = document.createElement("td");
+      reviewtextCell.innerText = reviewtext;
+      tableRow.appendChild(reviewtextCell);
+      let contactCell = document.createElement("td");
+      contactCell.innerText = contact;
+      tableRow.appendChild(contactCell);
+      document.getElementById("reviewTable").appendChild(tableRow);
     }
     function removeTableRows() {
-    let numRows = document.getElementById("reviewTable").rows.length;
-    for (let i = numRows-1; i > 0; i--) {
-      document.getElementById("reviewTable").removeChild(document.getElementById("reviewTable").rows[i]);
-    }
+      let numRows = document.getElementById("reviewTable").rows.length;
+      for (let i = numRows - 1; i > 0; i--) {
+        document.getElementById("reviewTable").removeChild(document.getElementById("reviewTable").rows[i]);
+      }
     }
   </script>  
 </section>
-
