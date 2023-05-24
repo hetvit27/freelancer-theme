@@ -1,98 +1,108 @@
 <section>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <!DOCTYPE html>
-<html>
-<head>
-<style>
-.container {
-  display: flex;
-  justify-content: space-between;
-}
-
-.box {
-  width: 200px;
-  height: 200px;
-  background-color: pink;
-  border-radius: 10px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  font-family: Arial, sans-serif;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-.form-container {
-  max-width: 400px;
-  margin: 20px auto;
-}
-
-.form-group {
-  margin-bottom: 20px;
-}
-
-.label {
-  font-family: Arial, sans-serif;
-  font-size: 16px;
-  font-weight: bold;
-  color: pink;
-}
-
-.input-field {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid pink;
-  border-radius: 5px;
-}
-
-.submit-button {
-  background-color: pink;
-  color: white;
-  font-family: Arial, sans-serif;
-  font-size: 16px;
-  font-weight: bold;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-</style>
-</head>
-<body>
-<div class="container">
-  <div class="box">Review</div>
-  <div class="box">Review</div>
-  <div class="box">Review</div>
-  <div class="box">Review</div>
-</div>
-
-<div class="form-container">
-  <form>
-    <div class="form-group">
-      <label class="label" for="name">Name:</label>
-      <input class="input-field" type="text" id="name" name="name" required>
+    <style>
+      .form-container {
+        text-align: right;
+        font-family: Arial, sans-serif;
+      }
+      .heart-button {
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        background-color: red;
+        color: white;
+        border: none;
+      }
+      .review-icon {
+        font-size: 24px;
+        color: red;
+        margin-right: 10px;
+      }
+    </style>
+    <div class="form-container">
+      <br>
+      <br>
+      <br>
+      <br>
+      <input id="search" placeholder="Search">
+      <button onclick="search()">Search</button>
+      <br>
+      <br>
+      <input id="reviewername" placeholder="Reviewer Name">
+      <input id="age" placeholder="Age">
+      <input id="reviewtext" placeholder="Review">
+      <input id="contact" placeholder="Contact">
+      <button onclick="addReview()">Save</button>
+      <br>
+      <br>
     </div>
-    <div class="form-group">
-      <label class="label" for="age">Age:</label>
-      <input class="input-field" type="number" id="age" name="age" required>
-    </div>
-    <div class="form-group">
-      <label class="label" for="review">Review:</label>
-      <textarea class="input-field" id="review" name="review" required></textarea>
-    </div>
-    <div class="form-group">
-      <label class="label" for="contact">Contact:</label>
-      <input class="input-field" type="text" id="contact" name="contact" required>
-    </div>
-    <button class="submit-button" type="submit">Submit</button>
-  </form>
-</div>
-</body>
-</html>
+    
+    <div id="reviewIcons" style="text-align: center;"></div>
+    
+    <script>
+      Review();
+      function Review() {
+        const options = {
+          method: 'GET',
+          cache: 'default',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        };
+        const url = "https://dating.dontntntnt.de/api/review/";
+        fetch(url, options)
+          .then(res => res.json())
+          .then(data => {
+            console.log(data);
+            console.log(typeof data);
+            console.log(JSON.stringify(data));
+            for (let i = 0; i < data.length; i++) {
+              addReviewIcon(data[i].reviewtext);
+            }
+          });
+      }
+      function addReview() {
+        const postOptions = {
+          method: 'POST',
+          cache: 'default',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        };
+        var url = "https://dating.dontntntnt.de/api/review/add";
+        url += "?name=" + document.getElementById("reviewername").value;
+        url += "&Age=" + document.getElementById("age").value;
+        url += "&Review=" + document.getElementById("reviewtext").value;
+        url += "&Contact=" + document.getElementById("contact").value;
+        fetch(url, postOptions)
+          .then(response => {
+            if (response.status !== 200) {
+              error("PUT API response failure: " + response.status);
+              return;
+            }
+            response.json().then(data => {
+              console.log(data);
+              addReviewIcon(data.reviewtext);
+            });
+          })
+          .catch(err => {
+            console.log(err + " ");
+          });
+      }
+
+      function addReviewIcon(reviewtext) {
+        const reviewIcons = document.getElementById("reviewIcons");
+        const icon = document.createElement("i");
+        icon.classList.add("fas", "fa-heart", "review-icon");
+        reviewIcons.appendChild(icon);
+        reviewIcons.appendChild(document.createTextNode(reviewtext));
+        reviewIcons.appendChild(document.createElement("br"));
+      }
+      
+      function removeReviewIcons() {
+        const reviewIcons = document.getElementById("reviewIcons");
+        while (reviewIcons.firstChild) {
+          reviewIcons.removeChild(reviewIcons.firstChild);
+        }
+      }
+    </script>  
 </section>
 
