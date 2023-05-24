@@ -68,10 +68,8 @@
           };
 
           fetch(url, requestOptions)
-            .then(function (response) {
-              return response.text();
-            })
-            .then(function (botMessage) {
+            .then((response) => response.text())
+            .then((text) => {
               var botDiv = document.createElement("div");
               botDiv.className = "message bot";
               botDiv.innerHTML = "<strong>Chad:</strong> " + botMessage;
