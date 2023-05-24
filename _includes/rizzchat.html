@@ -50,12 +50,13 @@
 
           message.value = "";
 
-          const url = "https://dating.dontntntnt.de/api/chat/generate/";
+          const url = "https://dating.dontntntnt.de/api/chat/generate";
+          const key = "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"; //liability? might need to find a way to plug this in separately?
 
           var myHeaders = new Headers();
           myHeaders.append("Content-Type", "application/json");
 
-          var data = { prompt: userMessage };
+          var data = { prompt: userMessage, key: key };
 
           var requestOptions = {
             method: "POST",
