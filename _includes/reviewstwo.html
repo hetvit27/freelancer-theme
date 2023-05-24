@@ -1,111 +1,119 @@
 <section>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <!DOCTYPE html>
-    <html>
-    <head>
-    <style>
-    .container {
-      display: flex;
-      justify-content: space-between;
-    }
-    
-    .box {
-      width: 200px;
-      height: 200px;
-      background-color: pink;
-      border-radius: 10px;
-      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: Arial, sans-serif;
-      font-weight: bold;
-      text-transform: uppercase;
-    }
-    
-    .form-container {
-      max-width: 400px;
-      margin: 20px auto;
-    }
-    
-    .form-group {
-      margin-bottom: 20px;
-    }
-    
-    .label {
-      font-family: Arial, sans-serif;
-      font-size: 16px;
-      font-weight: bold;
-      color: pink;
-    }
-    
-    .input-field {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid pink;
-      border-radius: 5px;
-    }
-    
-    .submit-button {
-      background-color: pink;
-      color: white;
-      font-family: Arial, sans-serif;
-      font-size: 16px;
-      font-weight: bold;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    </style>
-    <script>
-    function generateBoxes() {
-      var name = document.getElementById("name").value;
-      var age = document.getElementById("age").value;
-      var review = document.getElementById("review").value;
-      var contact = document.getElementById("contact").value;
-    
-      var container = document.getElementById("box-container");
-      container.innerHTML = ""; // Clear previous boxes
-    
-      for (var i = 0; i < 4; i++) {
-        var box = document.createElement("div");
-        box.classList.add("box");
-        box.innerText = "Name: " + name + "\nAge: " + age + "\nReview: " + review + "\nContact: " + contact;
-        container.appendChild(box);
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  </head>
+  <input id="search" placeholder="Search">
+  <button onclick="search()">Search</button>
+  <br>
+  <br>
+  <input id="reviewername" placeholder="Reviewer Name">
+  <input id="age" placeholder="Age">
+  <input id="reviewtext" placeholder="Review">
+  <input id="contact" placeholder="Contact">
+  <button onclick="addReview()">Save</button>
+  <br>
+  <br>
+  
+  <!-- Create table to display question posts -->
+  
+  <table id="reviewTable" border="1" style="border-collapse: collapse;">
+      <tr>
+          <th>Reviewer Name</th>
+          <th>Age</th>
+          <th>Review</th>
+          <th>Contact</th>
+      </tr>
+  </table>
+  <script>
+    Review();
+    function Review() {
+      const options = {
+                  method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                  // mode: 'cors', // no-cors, *cors, same-origin
+                  cache: 'default', // *default, no-cache, reload, force-cache, only-if-cached
+                  // credentials: 'same-origin', // include, same-origin, omit
+                  headers: {
+                  'Content-Type': 'application/json'
+                  // 'Content-Type': 'application/x-www-form-urlencoded',
+                  },
+              };
+      const url = "https://dating.dontntntnt.de/api/review/";
+      fetch(url, options)
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+          console.log(typeof data);
+          console.log(JSON.stringify(data));
+      for (let i = 0; i < data.length; i++) {
+        addTableRow(data[i].reviewername, data[i].age, data[i].reviewtext, data[i].contact);
       }
+        });
     }
-    </script>
-    </head>
-    <body>
-    <div class="container" id="box-container"></div>
-    
-    <div class="form-container">
-      <form onsubmit="event.preventDefault(); generateBoxes();">
-        <div class="form-group">
-          <label class="label" for="name">Name:</label>
-          <input class="input-field" type="text" id="name" name="name" required>
-        </div>
-        <div class="form-group">
-          <label class="label" for="age">Age:</label>
-          <input class="input-field" type="number" id="age" name="age" required>
-        </div>
-        <div class="form-group">
-          <label class="label" for="review">Review:</label>
-          <textarea class="input-field" id="review" name="review" required></textarea>
-        </div>
-        <div class="form-group">
-          <label class="label" for="contact">Contact:</label>
-          <input class="input-field" type="text" id="contact" name="contact" required>
-        </div>
-        <button class="submit-button" type="submit">Submit</button>
-      </form>
-    </div>
-    </body>
-    </html>    
+  
+    function addReview() {
+    const postOptions = {
+                  method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                  // mode: 'cors', // no-cors, *cors, same-origin
+                  cache: 'default', // *default, no-cache, reload, force-cache, only-if-cached
+                  // credentials: 'same-origin', // include, same-origin, omit
+                  headers: {
+                  'Content-Type': 'application/json'
+                  // 'Content-Type': 'application/x-www-form-urlencoded',
+                  },
+              };
+    // var problemData = new URLSearchParams();
+    // problemData.append(`problem`, document.getElementById("question").value);
+    // problemData.append(`Unit`, document.getElementById("unit").value);
+    // problemData.append(`Topic`, document.getElementById("topic").value);
+    // problemData.append(`Tags`, document.getElementById("tags").value);
+    var url = "https://dating.dontntntnt.de/api/review/add";
+    url += "?name=" + document.getElementById("reviewername").value;
+    url += "&Age=" + document.getElementById("age").value;
+    url += "&Review=" + document.getElementById("reviewtext").value;
+    url += "&Contact=" + document.getElementById("contact").value;
+    // fetch the API
+    fetch(url, postOptions)
+    // response is a RESTful "promise" on any successful fetch
+    .then(response => {
+    // check for response errors
+    if (response.status !== 200) {
+      error("PUT API response failure: " + response.status)
+      return;  // api failure
+    }
+    // valid response will have JSON data
+    response.json().then(data => {
+      console.log(data);
+    })
+    })
+    // catch fetch errors (ie Nginx ACCESS to server blocked)
+    .catch(err => {
+    console.log(err + " ");
+    });
+    }
+    function addTableRow(reviewername, age, reviewtext, contact) {
+    /// let tableRow = document.createElement("tr");
+    /// let idCell = document.createElement("td");
+    /// tableRow.appendChild(idCell);
+    let reviewernameCell = document.createElement("td");
+    reviewernameCell.innerText = reviewername;
+    tableRow.appendChild(reviewernameCell);
+    let ageCell = document.createElement("td");
+    ageCell.innerText = age;
+    tableRow.appendChild(ageCell);
+    let reviewtextCell = document.createElement("td");
+    reviewtextCell.innerText = reviewtext;
+    tableRow.appendChild(reviewtextCell);
+    let contactCell = document.createElement("td");
+    contactCell.innerText = contact;
+    tableRow.appendChild(contactCell);
+    document.getElementById("reviewTable").appendChild(tableRow);
+    }
+    function removeTableRows() {
+    let numRows = document.getElementById("reviewTable").rows.length;
+    for (let i = numRows-1; i > 0; i--) {
+      document.getElementById("reviewTable").removeChild(document.getElementById("reviewTable").rows[i]);
+    }
+    }
+  </script>  
 </section>
 
