@@ -31,6 +31,7 @@
     function Review() {
       const options = {
         method: 'GET',
+        mode: 'no-cors',
         cache: 'default',
         headers: {
           'Content-Type': 'application/json'
@@ -51,6 +52,7 @@
     function addReview() {
       const postOptions = {
         method: 'POST',
+        mode: 'no-cors',
         cache: 'default',
         headers: {
           'Content-Type': 'application/json'
