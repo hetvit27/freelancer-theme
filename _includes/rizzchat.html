@@ -34,11 +34,7 @@
     <body>
       <h1>General Rizz with Chad</h1>
       <div class="chatbox" id="chatbox"></div>
-      <input
-        type="text"
-        id="message"
-        placeholder="Ask your rizz questions here..."
-      />
+      <input type="text" id="message" placeholder="Ask about rizz here..." />
       <button id="send">Send</button>
       <script>
         var chatbox = document.getElementById("chatbox");
@@ -54,7 +50,24 @@
 
           message.value = "";
 
-          fetch("/get_response?message=" + encodeURIComponent(userMessage))
+          const url = "https://dating.dontntntnt.de/api/chat/generate/";
+
+          var myHeaders = new Headers();
+          myHeaders.append("Content-Type", "application/json");
+
+          var data = { prompt: userMessage };
+
+          var requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            mode: "cors",
+            cache: "default",
+            credentials: "include",
+            redirect: "manual",
+            body: JSON.stringify(data),
+          };
+
+          fetch(url, requestOptions)
             .then(function (response) {
               return response.text();
             })
