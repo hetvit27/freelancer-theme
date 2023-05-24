@@ -1,124 +1,119 @@
 <section>
-<!DOCTYPE html>
-<html>
 <head>
-  <title>Your Page Title</title>
-  <style>
-    .container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      height: 100vh;
-    }
-
-    .form-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background-color: #f7f3f7;
-      padding: 20px;
-      border-radius: 10px;
-      margin-top: 20px;
-    }
-
-    .pink-box {
-      background-color: pink;
-      padding: 20px;
-      border-radius: 10px;
-      margin-top: 20px;
-    }
-  </style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </head>
-<body>
-  <div class="container">
-    <section>
-      <br>
-      <br>
-      <br>
-      <br>
-      <input id="search" placeholder="Search" style="font-family: Arial, sans-serif; font-size: 16px;">
-      <button onclick="search()" style="font-family: Arial, sans-serif; font-size: 16px;">Search</button>
-      <br>
-      <br>
-      <input id="reviewername" placeholder="Reviewer Name" style="font-family: Arial, sans-serif; font-size: 16px;">
-      <input id="age" placeholder="Age" style="font-family: Arial, sans-serif; font-size: 16px;">
-      <input id="reviewtext" placeholder="Review" style="font-family: Arial, sans-serif; font-size: 16px;">
-      <input id="contact" placeholder="Contact" style="font-family: Arial, sans-serif; font-size: 16px;">
-      <button onclick="addReview()" style="font-family: Arial, sans-serif; font-size: 16px; background-color: transparent; border: none; cursor: pointer;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-heart" viewBox="0 0 16 16">
-          <path d="M8 14.567c-4.136-3.096-6-5.24-6-8.154C2 3.176 4.096 1 7.372 1 9.34 1 11.5 2.403 12.315 4.141c.023.045.049.088.075.131h0c.026-.043.052-.086.075-.131C13.5 2.403 15.66 1 17.628 1 20.904 1 23 3.176 23 6.413c0 2.914-1.864 5.058-6 8.154h0a.5.5 0 0 1-.628 0zM7.372 3.279c-1.922-1.792-4.08-1.799-6.003 0C-1.62 4.001-1.705 5.675 1.692 8.02h0c1.56 1.342 4.12 3.318 5.68 4.72h0c1.56-1.402 4.12-3.378 5.68-4.72h0C17.706 5.675 17.62 4.001 15.372 3.279h0C13.876 2.585 10.787 1 7.372 1h0c-3.415 0-6.503 1.585-7.003 2.279h0z"/>
-        </svg>
-      </button>
-      <br>
-      <br>
-      <div id="reviewContainer"></div>
-    </section>
-    <div id="reviewBox" class="pink-box" style="display: none;"></div>
-  </div>
 
-  <script>
-    Review();
-    function Review() {
-      const options = {
-        method: 'GET',
-        cache: 'default',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      };
-      const url = "https://dating.dontntntnt.de/api/review/";
-      fetch(url, options)
-        .then(res => res.json())
-        .then(data => {
-          console.log(data);
-          console.log(typeof data);
-          console.log(JSON.stringify(data));
-          for (let i = 0; i < data.length; i++) {
-            addReview(data[i].reviewername, data[i].age, data[i].reviewtext, data[i].contact);
-          }
-        });
-    }
-    function addReview() {
-      const postOptions = {
-        method: 'POST',
-        cache: 'default',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      };
-      var url = "https://dating.dontntntnt.de/api/review/add";
+<input id="search" placeholder="Search">
+<button onclick="search()">Search</button>
+<br>
+<br>
+<input id="reviewername" placeholder="Reviewer Name">
+<input id="age" placeholder="Age">
+<input id="reviewtext" placeholder="Review">
+<input id="contact" placeholder="Contact">
+<button onclick="addReview()">Save</button>
+<br>
+<br>
+
+<!-- Create table to display question posts -->
+
+<table id="reviewTable" border="1" style="border-collapse: collapse;">
+		<tr>
+				<th>Reviewer Name</th>
+				<th>Age</th>
+				<th>Review</th>
+				<th>Contact</th>
+		</tr>
+</table>
+
+<script>
+  Review();
+  function Review() {
+  	const options = {
+                method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                // mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'default', // *default, no-cache, reload, force-cache, only-if-cached
+                // credentials: 'same-origin', // include, same-origin, omit
+                headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+            };
+    const url = "https://dating.dontntntnt.de/api/review/";
+    fetch(url, options)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        console.log(typeof data);
+        console.log(JSON.stringify(data));
+
+		for (let i = 0; i < data.length; i++) {
+      addTableRow(data[i].reviewername, data[i].age, data[i].reviewtext, data[i].contact);
+		}
+      });
+  }
+
+  function addReview() {
+	const postOptions = {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                // mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'default', // *default, no-cache, reload, force-cache, only-if-cached
+                // credentials: 'same-origin', // include, same-origin, omit
+                headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+            };
+	// var problemData = new URLSearchParams();
+	// problemData.append(`problem`, document.getElementById("question").value);
+	// problemData.append(`Unit`, document.getElementById("unit").value);
+	// problemData.append(`Topic`, document.getElementById("topic").value);
+	// problemData.append(`Tags`, document.getElementById("tags").value);
+  var url = "https://dating.dontntntnt.de/api/review/add";
       url += "?name=" + document.getElementById("reviewername").value;
       url += "&Age=" + document.getElementById("age").value;
       url += "&Review=" + document.getElementById("reviewtext").value;
       url += "&Contact=" + document.getElementById("contact").value;
-      fetch(url, postOptions)
-        .then(response => {
-          if (response.status !== 200) {
-            error("PUT API response failure: " + response.status);
-            return;
-          }
-          response.json().then(data => {
-            console.log(data);
-            showReview(data);
-          });
-        })
-        .catch(err => {
-          console.log(err + " ");
-        });
+	// fetch the API
+	fetch(url, postOptions)
+	// response is a RESTful "promise" on any successful fetch
+	.then(response => {
+	// check for response errors
+	if (response.status !== 200) {
+		error("PUT API response failure: " + response.status)
+		return;  // api failure
+	}
+	// valid response will have JSON data
+	response.json().then(data => {
+		console.log(data);
+	})
+	})
+	// catch fetch errors (ie Nginx ACCESS to server blocked)
+	.catch(err => {
+	console.log(err + " ");
+	});
+  }
+  function addTableRow(reviewername, age, reviewtext, contact) {
+      let tableRow = document.createElement("tr");
+      let reviewernameCell = document.createElement("td");
+      reviewernameCell.innerText = reviewername;
+      tableRow.appendChild(reviewernameCell);
+      let ageCell = document.createElement("td");
+      ageCell.innerText = age;
+      tableRow.appendChild(ageCell);
+      let reviewtextCell = document.createElement("td");
+      reviewtextCell.innerText = reviewtext;
+      tableRow.appendChild(reviewtextCell);
+      let contactCell = document.createElement("td");
+      contactCell.innerText = contact;
+      tableRow.appendChild(contactCell);
+      document.getElementById("reviewTable").appendChild(tableRow);
     }
-
-    function showReview(review) {
-      const reviewBox = document.getElementById("reviewBox");
-      reviewBox.style.display = "block";
-      reviewBox.innerHTML = `
-        <p><strong>Reviewer Name:</strong> ${review.reviewername}</p>
-        <p><strong>Age:</strong> ${review.age}</p>
-        <p><strong>Review:</strong> ${review.reviewtext}</p>
-        <p><strong>Contact:</strong> ${review.contact}</p>
-      `;
+    function removeTableRows() {
+      let numRows = document.getElementById("reviewTable").rows.length;
+      for (let i = numRows - 1; i > 0; i--) {
+        document.getElementById("reviewTable").removeChild(document.getElementById("reviewTable").rows[i]);
+      }
     }
-  </script>
-</body>
-</html>
+  </script>  
 </section>
