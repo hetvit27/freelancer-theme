@@ -72,7 +72,7 @@
             .then((text) => {
               var botDiv = document.createElement("div");
               botDiv.className = "message bot";
-              botDiv.innerHTML = "<strong>Chad:</strong> " + botMessage;
+              botDiv.innerHTML = "<strong>Chad:</strong> " + text;
               chatbox.appendChild(botDiv);
 
               chatbox.scrollTop = chatbox.scrollHeight;
