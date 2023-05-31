@@ -5,31 +5,26 @@
     <title>Matches</title>
     <style>
     .heart {
-        width: 100px;
-        height: 100px;
-        background-color: pink;
-        position: relative;
-        display: inline-block;
-        margin: 10px;
-        transform: rotate(-45deg);
-      }
-      .heart:before,
-      .heart:after {
-        content: '';
-        width: 100px;
-        height: 100px;
-        background-color: pink;
-        border-radius: 50%;
-        position: absolute;
-      }
-      .heart:before {
-        top: -50px;
-        left: 0;
-      }
-      .heart:after {
-        top: 0;
-        left: 50px;
-      } 
+  position: relative;
+  width: 100px;
+  height: 100px;
+  background-color: pink;
+  display: inline-block;
+  margin: 10px;
+}
+
+.match-info {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.match-info p {
+  margin: 0;
+}
+ 
 
     </style>
   </head>
@@ -109,7 +104,11 @@
   const matchBox = document.createElement("div");
   matchBox.classList.add("match-box");
 
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+
   const matchInfo = document.createElement("div");
+  matchInfo.classList.add("match-info");
   matchInfo.innerHTML = `
     <p>name: ${name}</p>
     <p>age: ${age}</p>
@@ -117,18 +116,16 @@
     <p>pronouns: ${pronouns}</p>
   `;
 
-  const heart = document.createElement("div");
-  heart.classList.add("heart");
-
-  matchBox.appendChild(matchInfo);
+  heart.appendChild(matchInfo);
+  matchBox.appendChild(heart);
   matchContainer.appendChild(matchBox);
-  matchContainer.appendChild(heart);
 }
 
 function removeMatchButtons() {
   const matchContainer = document.getElementById("matchContainer");
   matchContainer.innerHTML = "";
 }
+
 
 
     </script>
