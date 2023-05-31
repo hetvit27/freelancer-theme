@@ -86,11 +86,11 @@
                   }
                   return response.json();
                 }).then(data => {
-                  for (const row of data) {
+                  for (const obj in data) {
                     $('#pickup-line-table').append('<tr><td>' + 
-                      row.id + '</td><td>' + 
-                      row.line + '</td><td>' + 
-                      row.wordCount + '</td></tr>');
+                      obj.id + '</td><td>' + 
+                      obj.line + '</td><td>' + 
+                      obj.wordCount + '</td></tr>');
                   }
                   $("#pickup-line-table").DataTable();
                 })
