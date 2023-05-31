@@ -1,103 +1,87 @@
 <section>
-  <br>
-  <br>
-  <br>
-  <br>
+  <!DOCTYPE html>
+  <html>
   <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+      <title>Matches Page</title>
+      <style>
+          .heart {
+              width: 100px;
+              height: 100px;
+              background-color: pink;
+              position: relative;
+              transform: rotate(45deg);
+              display: inline-block;
+              margin: 10px;
+          }
+          .heart:before,
+          .heart:after {
+              content: '';
+              width: 100px;
+              height: 100px;
+              background-color: pink;
+              border-radius: 50%;
+              position: absolute;
+          }
+          .heart:before {
+              top: -50px;
+              left: 0;
+          }
+          .heart:after {
+              top: 0;
+              left: 50px;
+          }
+      </style>
   </head>
-  <input id="search" placeholder="Search">
-  <button onclick="search()">Search</button>
-  <br>
-  <br>
-  <input id="reviewername" placeholder="Reviewer Name">
-  <input id="age" placeholder="Age">
-  <input id="reviewtext" placeholder="Review">
-  <input id="contact" placeholder="Contact">
-  <button onclick="addReview()">Save</button>
-  <br>
-  <br>
-  <!-- Create table to display question posts -->
-  <table id="reviewTable" border="1" style="border-collapse: collapse;">
-    <tr>
-      <th>Reviewer Name</th>
-      <th>Age</th>
-      <th>Review</th>
-      <th>Contact</th>
-    </tr>
-  </table>
-  <script>
-    Review();
-    function Review() {
-      const options = {
-        method: 'GET',
-        mode: 'no-cors',
-        cache: 'default',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      };
-      const url = "https://dating.dontntntnt.de/api/review/";
-      fetch(url, options)
-        .then(res => res.json())
-        .then(data => {
-          console.log(data);
-          console.log(typeof data);
-          console.log(JSON.stringify(data));
-          for (let i = 0; i < data.length; i++) {
-            addTableRow(data[i].reviewername, data[i].age, data[i].reviewtext, data[i].contact);
-          }
-        });
-    }
-    function addReview() {
-      const postOptions = {
-        method: 'POST',
-        mode: 'no-cors',
-        cache: 'default',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      };
-      var url = "https://dating.dontntntnt.de/api/review/add";
-      url += "?name=" + document.getElementById("reviewername").value;
-      url += "&Age=" + document.getElementById("age").value;
-      url += "&Review=" + document.getElementById("reviewtext").value;
-      url += "&Contact=" + document.getElementById("contact").value;
-      fetch(url, postOptions)
-        .then(response => {
-          if (response.status !== 200) {
-            error("PUT API response failure: " + response.status);
-            return;
-          }
-          response.json().then(data => {
-            console.log(data);
+  <body>
+      <h1>Heart-Shaped Form</h1>
+      <form id="myForm">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required><br><br>
+          <label for="age">Age:</label>
+          <input type="number" id="age" name="age" required><br><br>
+          <label for="location">Location:</label>
+          <input type="text" id="location" name="location" required><br><br>
+          <label for="pronouns">Pronouns:</label>
+          <input type="text" id="pronouns" name="pronouns" required><br><br>
+          <input type="submit" value="Submit">
+      </form>
+  
+      <script>
+          document.getElementById("myForm").addEventListener("submit", function(event) {
+              event.preventDefault(); // Prevent form submission
+  
+              // Get the form data
+              var formData = new FormData(this);
+  
+              // Convert form data to JSON object
+              var jsonObject = {};
+              formData.forEach(function(value, key) {
+                  jsonObject[key] = value;
+              });
+  
+              // Send the data to the backend API
+              var apiUrl = "https://dating.dontntntnt.de/api/matches/";
+              fetch(apiUrl, {
+                  method: "POST",
+                  headers: {
+                      "Content-Type": "application/json"
+                  },
+                  body: JSON.stringify(jsonObject)
+              })
+              .then(function(response) {
+                  if (response.ok) {
+                      alert("Data submitted successfully!");
+                  } else {
+                      alert("Error submitting data. Please try again.");
+                  }
+              })
+              .catch(function(error) {
+                  alert("An error occurred. Please try again later.");
+                  console.error(error);
+              });
           });
-        })
-        .catch(err => {
-          console.log(err + " ");
-        });
-    }
-    function addTableRow(reviewername, age, reviewtext, contact) {
-      let tableRow = document.createElement("tr");
-      let reviewernameCell = document.createElement("td");
-      reviewernameCell.innerText = reviewername;
-      tableRow.appendChild(reviewernameCell);
-      let ageCell = document.createElement("td");
-      ageCell.innerText = age;
-      tableRow.appendChild(ageCell);
-      let reviewtextCell = document.createElement("td");
-      reviewtextCell.innerText = reviewtext;
-      tableRow.appendChild(reviewtextCell);
-      let contactCell = document.createElement("td");
-      contactCell.innerText = contact;
-      tableRow.appendChild(contactCell);
-      document.getElementById("reviewTable").appendChild(tableRow);
-    }
-    function removeTableRows() {
-      let numRows = document.getElementById("reviewTable").rows.length;
-      for (let i = numRows - 1; i > 0; i--) {
-        document.getElementById("reviewTable").removeChild(document.getElementById("reviewTable").rows[i]);
-      }
-    }
-  </script>  
+      </script>
+  </body>
+  </html>
+   
 </section>
