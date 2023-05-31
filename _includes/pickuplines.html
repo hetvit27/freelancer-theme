@@ -65,13 +65,21 @@
                 var topic = document.getElementById("topic").value;
                 var numLines = document.getElementById("numLines").value;
 
+                var myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
+
                 // Insert url here
                 fetch("https://dating.dontntntnt.de/api/chat/generateLines", {
-                  mode : "cors",
+                  method: "POST",
+                  headers: myHeaders,
+                  mode: "cors",
+                  cache: "default",
+                  credentials: "include",
+                  redirect: "manual",
                   body: JSON.stringify({
-                    prompt: topic,
-                    responses: numLines
-                  }),
+                  prompt: topic,
+                  responses: numLines
+                  }),              
                 }).then(response => {
                   if (!response.ok) {
                     throw new Error("HTTP error " + response.status);
