@@ -57,13 +57,13 @@
 
             <script type="text/javascript" class="init">
 
-              var table = Document.getElementById("pickup-line-table");
-              var send = Document.getElementById("send");
+              var table = document.getElementById("pickup-line-table");
+              var send = document.getElementById("send");
 
               send.addEventListener("click", function() {
 
-                var topic = Document.getElementById("topic").value;
-                var numLines = Document.getElementById("numLines").value;
+                var topic = document.getElementById("topic").value;
+                var numLines = document.getElementById("numLines").value;
 
                 // Insert url here
                 fetch("https://dating.dontntntnt.de/api/chat/generateLines", {
