@@ -32,7 +32,63 @@
               </style>
         </head>
         <body>
-            
+
+            <label>Generate pickup lines related to the topic of:</label>
+            <input type="text" id="topic" placeholder="anything"/>
+            <br>
+            <label>Number of lines to generate:</label>
+            <input type="text" id="numLines" placeholder="1"/>
+            <br>
+            <button id="send">Generate</button>
+
+            <table id="pickup-line-table">
+              <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">PICKUP LINE</th>
+                    <th scope="col">WORD COUNT</th>
+                </tr>
+              </thead>
+            </table>
+
+            <script type="text/javascript" class="init">
+
+              var table = Document.getElementById("pickup-line-table");
+              var send = Document.getElementById("send");
+
+              send.addEventListener("click", function() {
+
+                var topic = Document.getElementById("topic").value;
+                var numLines = Document.getElementById("numLines").value;
+
+                // Insert url here
+                fetch("https://dating.dontntntnt.de/api/chat/generateLines", {
+                  mode : "cors",
+                  body: JSON.stringify({
+                    prompt: topic,
+                    responses: numLines
+                  }),
+                }).then(response => {
+                  if (!response.ok) {
+                    throw new Error("HTTP error " + response.status);
+                  }
+                  return response.json();
+                }).then(data => {
+                  for (const row of data) {
+                    $('#pickup-line-table').append('<tr><td>' + 
+                      row.id + '</td><td>' + 
+                      row.line + '</td><td>' + 
+                      row.wordCount + '</td></tr>');
+                  }
+                  $("#pickup-line-table").DataTable();
+                })
+                .catch(error => {
+                  console.error(error);
+                })
+                });
+
+            </script>
+
         </body>
     </html>
 </section>
