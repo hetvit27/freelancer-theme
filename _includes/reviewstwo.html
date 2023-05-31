@@ -4,7 +4,7 @@
   <head>
     <title>Matches</title>
     <style>
-     .heart {
+    .heart {
   width: 100px;
   height: 100px;
   background-color: pink;
@@ -24,14 +24,15 @@
 }
 
 .heart:before {
-  top: -50px;
+  top: -40px;
   left: 0;
+  transform: rotate(-45deg);
 }
 
 .heart:after {
-  top: -50px;
+  top: -40px;
   right: 0;
-  border-radius: 50px 50px 0 0;
+  transform: rotate(45deg);
 }
     </style>
   </head>
