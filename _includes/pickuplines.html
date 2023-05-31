@@ -86,7 +86,9 @@
                   }
                   return response.json();
                 }).then(data => {
+                  console.log(data);
                   for (const obj in data) {
+                    console.log("Obj: " + obj);
                     $('#pickup-line-table').append('<tr><td>' + 
                       obj.id + '</td><td>' + 
                       obj.line + '</td><td>' + 
