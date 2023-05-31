@@ -109,3 +109,96 @@
   </html>    
 </section>
 
+<script>
+  Matches();
+  function Matches() {
+  	const options = {
+                method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                // mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'default', // *default, no-cache, reload, force-cache, only-if-cached
+                // credentials: 'same-origin', // include, same-origin, omit
+                headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+            };
+    const url = "https://dating.dontntntnt.de/api/matches";
+    fetch(url, options)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        console.log(typeof data);
+        console.log(JSON.stringify(data));
+
+    for (let i = 0; i < data.length; i++) {
+      addTableCell(data[i].name, data[i].age, data[i].location, data[i].pronouns);
+      }
+      });
+  }
+
+  function addMatch() {
+	const postOptions = {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                // mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'default', // *default, no-cache, reload, force-cache, only-if-cached
+                // credentials: 'same-origin', // include, same-origin, omit
+                headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+            };
+	// var problemData = new URLSearchParams();
+	// problemData.append(`problem`, document.getElementById("question").value);
+	// problemData.append(`Unit`, document.getElementById("unit").value);
+	// problemData.append(`Topic`, document.getElementById("topic").value);
+	// problemData.append(`Tags`, document.getElementById("tags").value);
+	var url = "https://dating.dontntntnt.de/api/matches/add";
+	url += "?name=" + document.getElementById("name").value;
+	url += "&age=" + document.getElementById("age").value;
+	url += "&location=" + document.getElementById("location").value;
+	url += "&pronouns=" + document.getElementById("pronouns").value;
+	// fetch the API
+	fetch(url, postOptions)
+	// response is a RESTful "promise" on any successful fetch
+	.then(response => {
+	// check for response errors
+	if (response.status !== 200) {
+		error("PUT API response failure: " + response.status)
+		return;  // api failure
+	}
+	// valid response will have JSON data
+	response.json().then(data => {
+		console.log(data);
+	})
+	})
+	// catch fetch errors (ie Nginx ACCESS to server blocked)
+	.catch(err => {
+	console.log(err + " ");
+	});
+  }
+  function addTableCell(name, age, location, pronouns) {
+  // Get the table element
+  const table = document.getElementById('your-table-id'); // Replace 'your-table-id' with the actual ID of your table
+
+  // Create a new table row
+  const row = table.insertRow();
+
+  // Create a new table cell
+  const cell = row.insertCell();
+
+  // Set the content of the cell
+  cell.innerHTML = name; // Modify this line to set the content based on your specific cell data
+
+  // Repeat the above steps for each cell you want to add
+
+  const cell2 = row.insertCell();
+  cell2.innerHTML = age;
+
+  const cell3 = row.insertCell();
+  cell3.innerHTML = location;
+
+  const cell4 = row.insertCell();
+  cell4.innerHTML = pronouns;
+}
+
+</script>
