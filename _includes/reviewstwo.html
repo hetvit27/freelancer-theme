@@ -4,26 +4,33 @@
   <head>
     <title>Matches</title>
     <style>
-    .heart {
-  position: relative;
-  width: 100px;
-  height: 100px;
-  background-color: pink;
-  display: inline-block;
-  margin: 10px;
-}
 
-.match-info {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
-
-.match-info p {
-  margin: 0;
-}
+.heart {
+        width: 100px;
+        height: 100px;
+        background-color: pink;
+        position: relative;
+        display: inline-block;
+        margin: 10px;
+        transform: rotate(-45deg);
+      }
+      .heart:before,
+      .heart:after {
+        content: '';
+        width: 100px;
+        height: 100px;
+        background-color: pink;
+        border-radius: 50%;
+        position: absolute;
+      }
+      .heart:before {
+        top: -50px;
+        left: 0;
+      }
+      .heart:after {
+        top: 0;
+        left: 50px;
+      }
  
 
     </style>
