@@ -1,87 +1,145 @@
 <section>
-  <!DOCTYPE html>
-  <html>
-  <head>
-      <title>Matches Page</title>
-      <style>
-          .heart {
-              width: 100px;
-              height: 100px;
-              background-color: pink;
-              position: relative;
-              transform: rotate(45deg);
-              display: inline-block;
-              margin: 10px;
-          }
-          .heart:before,
-          .heart:after {
-              content: '';
-              width: 100px;
-              height: 100px;
-              background-color: pink;
-              border-radius: 50%;
-              position: absolute;
-          }
-          .heart:before {
-              top: -50px;
-              left: 0;
-          }
-          .heart:after {
-              top: 0;
-              left: 50px;
-          }
-      </style>
-  </head>
-  <body>
-      <h1>Heart-Shaped Form</h1>
-      <form id="myForm">
-          <label for="name">Name:</label>
-          <input type="text" id="name" name="name" required><br><br>
-          <label for="age">Age:</label>
-          <input type="number" id="age" name="age" required><br><br>
-          <label for="location">Location:</label>
-          <input type="text" id="location" name="location" required><br><br>
-          <label for="pronouns">Pronouns:</label>
-          <input type="text" id="pronouns" name="pronouns" required><br><br>
-          <input type="submit" value="Submit">
-      </form>
-  
-      <script>
-          document.getElementById("myForm").addEventListener("submit", function(event) {
-              event.preventDefault(); // Prevent form submission
-  
-              // Get the form data
-              var formData = new FormData(this);
-  
-              // Convert form data to JSON object
-              var jsonObject = {};
-              formData.forEach(function(value, key) {
-                  jsonObject[key] = value;
-              });
-  
-              // Send the data to the backend API
-              var apiUrl = "https://dating.dontntntnt.de/api/matches/add";
-              fetch(apiUrl, {
-                  method: "POST",
-                  headers: {
-                      "Content-Type": "application/json"
-                  },
-                  body: JSON.stringify(jsonObject)
-              })
-              .then(function(response) {
-                  if (response.ok) {
-                      alert("Data submitted successfully!");
-                  } else {
-                      alert("Error submitting data. Please try again.");
-                  }
-              })
-              .catch(function(error) {
-                  alert("An error occurred. Please try again later.");
-                  console.error(error);
-              });
-          });
-      </script>
-  </body>
-  </html>
-   
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Matches</title>
+	<style>
+		.heart {
+			width: 100px;
+			height: 100px;
+			background-color: pink;
+			position: relative;
+			transform: rotate(45deg);
+			display: inline-block;
+			margin: 10px;
+		}
+		.heart:before,
+		.heart:after {
+			content: '';
+			width: 100px;
+			height: 100px;
+			background-color: pink;
+			border-radius: 50%;
+			position: absolute;
+		}
+		.heart:before {
+			top: -50px;
+			left: 0;
+		}
+		.heart:after {
+			top: 0;
+			left: 50px;
+		}
+	</style>
+</head>
+<body>
+	<h1>Matches</h1>
+	<input id="search" placeholder="Search">
+	<button onclick="search()">Search</button>
+	<br>
+	<br>
+	<input id="name" placeholder="Name">
+	<input id="age" placeholder="Age">
+	<input id="location" placeholder="Location">
+	<input id="pronouns" placeholder="Pronouns">
+	<button onclick="addMatch()">Save</button>
+	<br>
+	<br>
+	
+	<div id="matchContainer"></div>
+	
+	<script>
+		Match();
+		
+		function Match() {
+			const options = {
+				method: 'GET',
+				cache: 'default',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+			};
+			
+			const url = "https://dating.dontntntnt.de/api/matches/";
+			
+			fetch(url, options)
+				.then(res => res.json())
+				.then(data => {
+					console.log(data);
+					console.log(typeof data);
+					console.log(JSON.stringify(data));
+					
+					for (let i = 0; i < data.length; i++) {
+						addMatchButton(data[i].name, data[i].age, data[i].location, data[i].pronouns);
+					}
+				});
+		}
+		
+		function addMatch() {
+			const postOptions = {
+				method: 'POST',
+				cache: 'default',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+			};
+			
+			const url = "https://dating.dontntntnt.de/api/matches/add";
+			const name = document.getElementById("name").value;
+			const age = document.getElementById("age").value;
+			const location = document.getElementById("location").value;
+			const prnouns = document.getElementById("pronouns").value;
+			
+			const data = {
+				name: name,
+				Age: age,
+				Location: location,
+				Pronouns: pronouns
+			};
+			
+			postOptions.body = JSON.stringify(data);
+			
+			fetch(url, postOptions)
+				.then(response => {
+					if (!response.ok) {
+						throw new Error("Error submitting data. Please try again.");
+					}
+					
+					alert("Data submitted successfully!");
+					return response.json();
+				})
+				.then(data => {
+					console.log(data);
+				})
+				.catch(error => {
+					alert("An error occurred. Please try again later.");
+					console.error(error);
+				});
+		}
+		
+		function addMatchButton(name, age, location, pronoun) {
+			const matchContainer = document.getElementById("matchContainer");
+			
+			const heart = document.createElement("div");
+			heart.classList.add("heart");
+			
+			const matchInfo = document.createElement("div");
+			matchInfo.innerHTML = `
+				<p>Name: ${name}</p>
+				<p>Age: ${age}</p>
+				<p>Location: ${location}</p>
+				<p>Pronouns: ${pronouns}</p>
+			`;
+			
+			heart.appendChild(matchInfo);
+			matchContainer.appendChild(heart);
+		}
+		
+		function removeMatchButtons() {
+			const matchContainer = document.getElementById("matchContainer");
+			matchContainer.innerHTML = "";
+		}
+	</script>
+</body>
+</html>
 </section>
