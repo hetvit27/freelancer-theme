@@ -109,9 +109,6 @@
   const matchBox = document.createElement("div");
   matchBox.classList.add("match-box");
 
-  const heart = document.createElement("div");
-  heart.classList.add("heart");
-
   const matchInfo = document.createElement("div");
   matchInfo.innerHTML = `
     <p>name: ${name}</p>
@@ -120,15 +117,19 @@
     <p>pronouns: ${pronouns}</p>
   `;
 
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+
   matchBox.appendChild(matchInfo);
-  matchContainer.appendChild(heart);
   matchContainer.appendChild(matchBox);
+  matchContainer.appendChild(heart);
 }
 
 function removeMatchButtons() {
   const matchContainer = document.getElementById("matchContainer");
   matchContainer.innerHTML = "";
 }
+
 
     </script>
   </body>
