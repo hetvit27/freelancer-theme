@@ -105,6 +105,7 @@
               console.log(text);
               var botDiv = document.createElement("div");
               botDiv.className = "message bot";
+              botDiv.innerHTML = `<strong>${bot}:</strong> ` + "is thinking...";
               botDiv.innerHTML = `<strong>${bot}:</strong> ` + text;
               chatbox.appendChild(botDiv);
 
