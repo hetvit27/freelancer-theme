@@ -90,9 +90,9 @@
                   for (const obj in data) {
                     console.log("Obj: " + obj);
                     $('#pickup-line-table').append('<tr><td>' + 
-                      obj.get("id") + '</td><td>' + 
-                      obj.get("line") + '</td><td>' + 
-                      obj.get("wordCount") + '</td></tr>');
+                      obj.id + '</td><td>' + 
+                      obj.line + '</td><td>' + 
+                      obj.wordCount + '</td></tr>');
                   }
                   $("#pickup-line-table").DataTable();
                 })
