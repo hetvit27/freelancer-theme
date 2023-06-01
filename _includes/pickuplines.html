@@ -87,8 +87,11 @@
                   return response.json();
                 }).then(data => {
                   console.log(data);
-                  for (const obj in data) {
+                  for (const obj of data) {
                     console.log("Obj: " + obj);
+                    console.log(obj.id);
+                    console.log(obj.line);
+                    console.log(obj.wordCount);
                     $('#pickup-line-table').append('<tr><td>' + 
                       obj.id + '</td><td>' + 
                       obj.line + '</td><td>' + 
