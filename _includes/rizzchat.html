@@ -99,13 +99,20 @@
             body: JSON.stringify(data),
           };
 
+          var thinkingMessage = document.createElement("div");
+
+          thinkingMessage.className = "thinking message";
+          thinkingMessage.innerHTML = "<strong>Bot:</strong> Thinking...";
+
+          chatbox.insertBefore(thinkingMessage, chatbox.firstChild);
           fetch(url, requestOptions)
             .then((response) => response.text())
             .then((text) => {
+              chatbox.removeChild(thinkingMessage);
+
               console.log(text);
               var botDiv = document.createElement("div");
               botDiv.className = "message bot";
-              botDiv.innerHTML = `<strong>${bot}:</strong> ` + "is thinking...";
               botDiv.innerHTML = `<strong>${bot}:</strong> ` + text;
               chatbox.appendChild(botDiv);
 
