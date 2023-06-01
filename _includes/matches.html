@@ -1,204 +1,125 @@
 <section>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <!DOCTYPE html>
-  <html>
-  <head>
-  <style>
-  .container {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .box {
-    width: 200px;
-    height: 200px;
-    background-color: pink;
-    border-radius: 10px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: Arial, sans-serif;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-  
-  .form-container {
-    max-width: 400px;
-    margin: 20px auto;
-  }
-  
-  .form-group {
-    margin-bottom: 20px;
-  }
-  
-  .label {
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-    font-weight: bold;
-    color: pink;
-  }
-  
-  .input-field {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid pink;
-    border-radius: 5px;
-  }
-  
-  .submit-button {
-    background-color: pink;
-    color: white;
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  </style>
-  <script>
-  function generateBoxes() {
-    var name = document.getElementById("name").value;
-    var age = document.getElementById("age").value;
-    var location = document.getElementById("location").value;
-    var pronouns = document.getElementById("pronouns").value;
-  
-    var container = document.getElementById("box-container");
-    container.innerHTML = ""; // Clear previous boxes
-  
-    for (var i = 0; i < 1; i++) {
-      var box = document.createElement("div");
-      box.classList.add("box");
-      box.innerText = "Name: " + name + "\nAge: " + age + "\nLocation: " + location + "\nPronouns: " + pronouns;
-      container.appendChild(box);
-    }
-  }
-  </script>
-  </head>
-  <body>
-  <div class="container" id="box-container"></div>
-  
-  <div class="form-container">
-    <form onsubmit="event.preventDefault(); generateBoxes();">
-      <div class="form-group">
-        <label class="label" for="name">Name:</label>
-        <input class="input-field" type="text" id="name" name="name" required>
-      </div>
-      <div class="form-group">
-        <label class="label" for="age">Age:</label>
-        <input class="input-field" type="number" id="age" name="age" required>
-      </div>
-      <div class="form-group">
-        <label class="label" for="location">Location:</label>
-        <input class="input-field" type="text" id="location" name="location" required></textarea>
-      </div>
-      <div class="form-group">
-        <label class="label" for="pronouns">Prounouns:</label>
-        <input class="input-field" type="text" id="pronouns" name="pronouns" required>
-      </div>
-      <button class="submit-button" type="submit">Submit</button>
-    </form>
-  </div>
-  </body>
-  </html>    
+  <section>
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Matches</title>
+      <style>
+        .button {
+          width: 200px;
+          height: 200px;
+          background-color: rgb(249, 208, 214);
+          display: inline-block;
+          margin: 10px;
+          text-align: center;
+        }
+        .rizz-button {
+          color: #333;
+        }
+      </style>
+    </head>
+    <body>
+      <h1>Matches</h1>
+      <br>
+      <input id="name" placeholder="name">
+      <input id="age" placeholder="age">
+      <input id="location" placeholder="location">
+      <input id="pronouns" placeholder="pronouns">
+      <button onclick="addMatch()">Save</button>
+      <br>
+      <br>
+      
+      <div id="matchContainer"></div>
+      
+      <script>
+        Match();
+        
+        function Match() {
+          const options = {
+            method: 'GET',
+            cache: 'default',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+          };
+          
+          const url = "https://dating.dontntntnt.de/api/matches/";
+          
+          fetch(url, options)
+            .then(res => res.json())
+            .then(data => {
+              console.log(data);
+              console.log(typeof data);
+              console.log(JSON.stringify(data));
+              
+              for (let i = 0; i < data.length; i++) {
+                addMatchButton(data[i].name, data[i].age, data[i].location, data[i].pronouns);
+              }
+            });
+        }
+        
+        function addMatch() {
+          const postOptions = {
+            method: 'POST',
+            cache: 'default',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+          };
+          
+          var url = "https://dating.dontntntnt.de/api/matches/add";
+          url += "?name=" + encodeURIComponent(document.getElementById("name").value);
+          url += "&age=" + encodeURIComponent(document.getElementById("age").value);
+          url += "&location=" + encodeURIComponent(document.getElementById("location").value);
+          url += "&pronouns=" + encodeURIComponent(document.getElementById("pronouns").value);
+          
+          fetch(url, postOptions)
+            .then(response => {
+              if (response.status !== 200) {
+                alert("PUT API response failure: " + response.status);
+                return;
+              }
+              response.json().then(data => {
+                console.log(data);
+              });
+            })
+            .catch(err => {
+              console.log(err + " ");
+            });
+        }
+        
+        function addMatchButton(name, age, location, pronouns) {
+          const matchContainer = document.getElementById("matchContainer");
+          
+          const button = document.createElement("div");
+          button.classList.add("button");
+          
+          const matchInfo = document.createElement("div");
+          matchInfo.innerHTML = `
+            <p>name: ${name}</p>
+            <p>age: ${age}</p>
+            <p>location: ${location}</p>
+            <p>pronouns: ${pronouns}</p>
+          `;
+          
+          button.appendChild(matchInfo);
+          
+          const rizzButton = document.createElement("a");
+          rizzButton.href = "https://hetvit27.github.io/freelancer-theme/dating/rizzchat/";
+          rizzButton.innerText = "Rizz them up";
+          rizzButton.classList.add("rizz-button");
+          
+          button.appendChild(rizzButton);
+          
+          matchContainer.appendChild(button);
+        }
+        
+        function removeMatchButtons() {
+          const matchContainer = document.getElementById("matchContainer");
+          matchContainer.innerHTML = "";
+        }
+      </script>
+    </body>
+    </html>
+  </section>  
 </section>
-
-<script>
-  Matches();
-  function Matches() {
-  	const options = {
-                method: 'GET', // *GET, POST, PUT, DELETE, etc.
-                // mode: 'cors', // no-cors, *cors, same-origin
-                cache: 'default', // *default, no-cache, reload, force-cache, only-if-cached
-                // credentials: 'same-origin', // include, same-origin, omit
-                headers: {
-                'Content-Type': 'application/json'
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-                },
-            };
-    const url = "https://dating.dontntntnt.de/api/matches";
-    fetch(url, options)
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-        console.log(typeof data);
-        console.log(JSON.stringify(data));
-
-    for (let i = 0; i < data.length; i++) {
-      addTableCell(data[i].name, data[i].age, data[i].location, data[i].pronouns);
-      }
-      });
-  }
-
-  function addMatch() {
-	const postOptions = {
-                method: 'POST', // *GET, POST, PUT, DELETE, etc.
-                // mode: 'cors', // no-cors, *cors, same-origin
-                cache: 'default', // *default, no-cache, reload, force-cache, only-if-cached
-                // credentials: 'same-origin', // include, same-origin, omit
-                headers: {
-                'Content-Type': 'application/json'
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-                },
-            };
-	// var problemData = new URLSearchParams();
-	// problemData.append(`problem`, document.getElementById("question").value);
-	// problemData.append(`Unit`, document.getElementById("unit").value);
-	// problemData.append(`Topic`, document.getElementById("topic").value);
-	// problemData.append(`Tags`, document.getElementById("tags").value);
-	var url = "https://dating.dontntntnt.de/api/matches/add";
-	url += "?name=" + document.getElementById("name").value;
-	url += "&age=" + document.getElementById("age").value;
-	url += "&location=" + document.getElementById("location").value;
-	url += "&pronouns=" + document.getElementById("pronouns").value;
-	// fetch the API
-	fetch(url, postOptions)
-	// response is a RESTful "promise" on any successful fetch
-	.then(response => {
-	// check for response errors
-	if (response.status !== 200) {
-		error("PUT API response failure: " + response.status)
-		return;  // api failure
-	}
-	// valid response will have JSON data
-	response.json().then(data => {
-		console.log(data);
-	})
-	})
-	// catch fetch errors (ie Nginx ACCESS to server blocked)
-	.catch(err => {
-	console.log(err + " ");
-	});
-  }
-  function addTableCell(name, age, location, pronouns) {
-  // Get the table element
-  const table = document.getElementById("box-container"); // Replace 'your-table-id' with the actual ID of your table
-
-  // Create a new table row
-  const row = table.insertRow();
-
-  // Create a new table cell
-  const cell = row.insertCell();
-
-  // Set the content of the cell
-  cell.innerHTML = name; // Modify this line to set the content based on your specific cell data
-
-  // Repeat the above steps for each cell you want to add
-
-  const cell2 = row.insertCell();
-  cell2.innerHTML = age;
-
-  const cell3 = row.insertCell();
-  cell3.innerHTML = location;
-
-  const cell4 = row.insertCell();
-  cell4.innerHTML = pronouns;
-}
-
-</script>

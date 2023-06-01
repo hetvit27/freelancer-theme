@@ -25,10 +25,15 @@
       <input id="age" placeholder="age">
       <input id="location" placeholder="location">
       <input id="pronouns" placeholder="pronouns">
+      <select id="state">
+        <option value="">All</option>
+        <option value="AL">Alabama</option>
+        <option value="AK">Alaska</option>
+        <!-- ... and so on for all 50 states -->
+      </select>
       <button onclick="addMatch()">Save</button>
       <br>
       <br>
-      
       <div id="matchContainer"></div>
       
       <script>
@@ -117,6 +122,38 @@
         function removeMatchButtons() {
           const matchContainer = document.getElementById("matchContainer");
           matchContainer.innerHTML = "";
+        }
+        
+        function sortMatches() {
+          const pronouns = document.getElementById("pronouns").value;
+          const state = document.getElementById("state").value;
+          
+          // Clear existing match buttons
+          removeMatchButtons();
+          
+          const options = {
+            method: 'GET',
+            cache: 'default',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+          };
+          
+          const url = "https://dating.dontntntnt.de/api/matches/";
+          
+          fetch(url, options)
+            .then(res => res.json())
+            .then(data => {
+              console.log(data);
+              console.log(typeof data);
+              console.log(JSON.stringify(data));
+              
+              for (let i = 0; i < data.length; i++) {
+                if ((pronouns === "" || data[i].pronouns === pronouns) && (state === "" || data[i].location === state)) {
+                  addMatchButton(data[i].name, data[i].age, data[i].location, data[i].pronouns);
+                }
+              }
+            });
         }
       </script>
     </body>
