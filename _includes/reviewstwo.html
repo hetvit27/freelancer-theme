@@ -1,130 +1,114 @@
 <section>
-  <!DOCTYPE html>
-  <html>
-  <head>
-    <title>Matches</title>
-    <style>
-      .heart {
-        width: 100px;
-        height: 100px;
-        background-color: pink;
-        position: relative;
-        display: inline-block;
-        margin: 10px;
-        transform: rotate(-45deg);
-      }
-      .heart:before,
-      .heart:after {
-        content: '';
-        width: 100px;
-        height: 100px;
-        background-color: pink;
-        border-radius: 50%;
-        position: absolute;
-      }
-      .heart:before {
-        top: -50px;
-        left: 0;
-      }
-      .heart:after {
-        top: 0;
-        left: 50px;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Matches</h1>
-    <br>
-    <input id="name" placeholder="name">
-    <input id="age" placeholder="age">
-    <input id="location" placeholder="location">
-    <input id="pronouns" placeholder="pronouns">
-    <button onclick="addMatch()">Save</button>
-    <br>
-    <br>
-    
-    <div id="matchContainer"></div>
-    
-    <script>
-      Match();
+  <section>
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Matches</title>
+      <style>
+        .button {
+          width: 100px;
+          height: 100px;
+          background-color: pink;
+          display: inline-block;
+          margin: 10px;
+          text-align: center;
+        }
+      </style>
+    </head>
+    <body>
+      <h1>Matches</h1>
+      <br>
+      <input id="name" placeholder="name">
+      <input id="age" placeholder="age">
+      <input id="location" placeholder="location">
+      <input id="pronouns" placeholder="pronouns">
+      <button onclick="addMatch()">Save</button>
+      <br>
+      <br>
       
-      function Match() {
-        const options = {
-          method: 'GET',
-          cache: 'default',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-        };
-        
-        const url = "https://dating.dontntntnt.de/api/matches/";
-        
-        fetch(url, options)
-          .then(res => res.json())
-          .then(data => {
-            console.log(data);
-            console.log(typeof data);
-            console.log(JSON.stringify(data));
-            
-            for (let i = 0; i < data.length; i++) {
-              addMatchButton(data[i].name, data[i].age, data[i].location, data[i].pronouns);
-            }
-          });
-      }
+      <div id="matchContainer"></div>
       
-      function addMatch() {
-        const postOptions = {
-          method: 'POST',
-          cache: 'default',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-        };
+      <script>
+        Match();
         
-        var url = "https://dating.dontntntnt.de/api/matches/add";
-        url += "?name=" + encodeURIComponent(document.getElementById("name").value);
-        url += "&age=" + encodeURIComponent(document.getElementById("age").value);
-        url += "&location=" + encodeURIComponent(document.getElementById("location").value);
-        url += "&pronouns=" + encodeURIComponent(document.getElementById("pronouns").value);
-        
-        fetch(url, postOptions)
-          .then(response => {
-            if (response.status !== 200) {
-              alert("PUT API response failure: " + response.status);
-              return;
-            }
-            response.json().then(data => {
+        function Match() {
+          const options = {
+            method: 'GET',
+            cache: 'default',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+          };
+          
+          const url = "https://dating.dontntntnt.de/api/matches/";
+          
+          fetch(url, options)
+            .then(res => res.json())
+            .then(data => {
               console.log(data);
+              console.log(typeof data);
+              console.log(JSON.stringify(data));
+              
+              for (let i = 0; i < data.length; i++) {
+                addMatchButton(data[i].name, data[i].age, data[i].location, data[i].pronouns);
+              }
             });
-          })
-          .catch(err => {
-            console.log(err + " ");
-          });
-      }
-      
-      function addMatchButton(name, age, location, pronouns) {
-        const matchContainer = document.getElementById("matchContainer");
+        }
         
-        const heart = document.createElement("div");
-        heart.classList.add("heart");
+        function addMatch() {
+          const postOptions = {
+            method: 'POST',
+            cache: 'default',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+          };
+          
+          var url = "https://dating.dontntntnt.de/api/matches/add";
+          url += "?name=" + encodeURIComponent(document.getElementById("name").value);
+          url += "&age=" + encodeURIComponent(document.getElementById("age").value);
+          url += "&location=" + encodeURIComponent(document.getElementById("location").value);
+          url += "&pronouns=" + encodeURIComponent(document.getElementById("pronouns").value);
+          
+          fetch(url, postOptions)
+            .then(response => {
+              if (response.status !== 200) {
+                alert("PUT API response failure: " + response.status);
+                return;
+              }
+              response.json().then(data => {
+                console.log(data);
+              });
+            })
+            .catch(err => {
+              console.log(err + " ");
+            });
+        }
         
-        const matchInfo = document.createElement("div");
-        matchInfo.innerHTML = `
-          <p>name: ${name}</p>
-          <p>age: ${age}</p>
-          <p>location: ${location}</p>
-          <p>pronouns: ${pronouns}</p>
-        `;
+        function addMatchButton(name, age, location, pronouns) {
+          const matchContainer = document.getElementById("matchContainer");
+          
+          const button = document.createElement("div");
+          button.classList.add("button");
+          
+          const matchInfo = document.createElement("div");
+          matchInfo.innerHTML = `
+            <p>name: ${name}</p>
+            <p>age: ${age}</p>
+            <p>location: ${location}</p>
+            <p>pronouns: ${pronouns}</p>
+          `;
+          
+          button.appendChild(matchInfo);
+          matchContainer.appendChild(button);
+        }
         
-        heart.appendChild(matchInfo);
-        matchContainer.appendChild(heart);
-      }
-      
-      function removeMatchButtons() {
-        const matchContainer = document.getElementById("matchContainer");
-        matchContainer.innerHTML = "";
-      }
-    </script>
-  </body>
-  </html>
+        function removeMatchButtons() {
+          const matchContainer = document.getElementById("matchContainer");
+          matchContainer.innerHTML = "";
+        }
+      </script>
+    </body>
+    </html>
+  </section>  
 </section>
