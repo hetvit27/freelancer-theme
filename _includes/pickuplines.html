@@ -57,6 +57,8 @@
 
             <script type="text/javascript" class="init">
 
+              var idCount = 0;
+
               var table = document.getElementById("pickup-line-table");
               var send = document.getElementById("send");
 
@@ -86,16 +88,12 @@
                   }
                   return response.json();
                 }).then(data => {
-                  console.log(data);
                   for (const obj of data) {
-                    console.log("Obj: " + obj);
-                    console.log(obj.id);
-                    console.log(obj.line);
-                    console.log(obj.wordCount);
                     $('#pickup-line-table').append('<tr><td>' + 
-                      obj.id + '</td><td>' + 
+                      idCount + '</td><td>' + 
                       obj.line + '</td><td>' + 
                       obj.wordCount + '</td></tr>');
+                      idCount++;
                   }
                   $("#pickup-line-table").DataTable();
                 })
