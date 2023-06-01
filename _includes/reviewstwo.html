@@ -1,10 +1,9 @@
-<section>
 <!DOCTYPE html>
+<html>
 <head>
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
   <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 </head>
-<html>
 <head>
   <title>Matches</title>
   <style>
@@ -48,9 +47,7 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
   <script>
-    Match();
-
-    function Match() {
+    function refreshTable() {
       const options = {
         method: 'GET',
         cache: 'default',
@@ -67,6 +64,9 @@
           console.log(data);
           console.log(typeof data);
           console.log(JSON.stringify(data));
+
+          const tableBody = document.getElementById("matchTableBody");
+          tableBody.innerHTML = ""; // Clear the table body before populating new data
 
           for (let i = 0; i < data.length; i++) {
             addMatchRow(data[i].name, data[i].age, data[i].location, data[i].pronouns);
@@ -99,7 +99,7 @@
           }
           response.json().then(data => {
             console.log(data);
-            Match(); // Call Match() again to refresh the table
+            refreshTable(); // Call the refreshTable() function to update the table with the new data
           });
         })
         .catch(err => {
@@ -132,7 +132,8 @@
         }]
       });
     }
+
+    refreshTable(); // Call the refreshTable() function initially to populate the table
   </script>
 </body>
 </html>
-</section>
