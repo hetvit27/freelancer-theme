@@ -2,7 +2,7 @@
   <html>
     <head>
       <meta charset="UTF-8" />
-      <title>Rizz with Chad</title>
+      <title>Rizz with GPT</title>
       <style>
         body {
           font-family: Arial, sans-serif;
@@ -32,11 +32,43 @@
       </style>
     </head>
     <body>
-      <h1>General Rizz with Chad</h1>
+      <h1>
+        <a href="javascript:void(0)" id="botToggle" onclick="toggleBot()"
+          >Rizz with Chad</a
+        >
+      </h1>
       <div class="chatbox" id="chatbox"></div>
       <input type="text" id="message" placeholder="Ask about rizz here..." />
       <button id="send">Send</button>
+      <style>
+        a {
+          color: rgb(255, 130, 169);
+          text-decoration: none;
+        }
+
+        a:hover {
+          color: rgb(254, 214, 227);
+          text-decoration: underline;
+        }
+
+        a:not(:hover) {
+          color: rgb(255, 130, 169);
+          text-decoration: none;
+        }
+      </style>
       <script>
+        var bot = "Chad";
+        function toggleBot() {
+          var wordElement = document.getElementById("botToggle");
+          if (wordElement.innerHTML === "Rizz with Chad") {
+            wordElement.innerHTML = "Rizz with Stacey";
+            bot = "Stacey";
+          } else {
+            wordElement.innerHTML = "Rizz with Chad";
+            bot = "Chad";
+          }
+        }
+
         var chatbox = document.getElementById("chatbox");
         var message = document.getElementById("message");
         var send = document.getElementById("send");
@@ -51,12 +83,11 @@
           message.value = "";
 
           const url = "https://dating.dontntntnt.de/api/chat/generate";
-          const key = "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"; //liability? might need to find a way to plug this in separately?
 
           var myHeaders = new Headers();
           myHeaders.append("Content-Type", "application/json");
 
-          var data = { prompt: userMessage, key: key };
+          var data = { prompt: userMessage, botName: bot };
 
           var requestOptions = {
             method: "POST",
@@ -74,7 +105,7 @@
               console.log(text);
               var botDiv = document.createElement("div");
               botDiv.className = "message bot";
-              botDiv.innerHTML = "<strong>Chad:</strong> " + text;
+              botDiv.innerHTML = "<strong>$(bot):</strong> " + text;
               chatbox.appendChild(botDiv);
 
               chatbox.scrollTop = chatbox.scrollHeight;
