@@ -1,11 +1,11 @@
-<section></section>
+<section>
 <!DOCTYPE html>
+<head>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+  <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+</head>
 <html>
 <head>
-  <head>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
-    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-  </head>
   <title>Matches</title>
   <style>
     .button {
@@ -99,6 +99,7 @@
           }
           response.json().then(data => {
             console.log(data);
+            Match(); // Call Match() again to refresh the table
           });
         })
         .catch(err => {
