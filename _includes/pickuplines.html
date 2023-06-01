@@ -4,32 +4,7 @@
             <meta charset="UTF-8" />
             <title>Pickup Line Generator</title>
             <style>
-                body {
-                  font-family: Arial, sans-serif;
-                  font-size: 16px;
-                }
-                .chatbox {
-                  height: 400px;
-                  overflow: auto;
-                  border: 1px solid #ccc;
-                  padding: 10px;
-                }
-                .message {
-                  margin-bottom: 10px;
-                }
-                .user {
-                  color: blue;
-                }
-                .bot {
-                  color: green;
-                }
-                input[type="text"] {
-                  width: 100%;
-                  padding: 10px;
-                  box-sizing: border-box;
-                  border: 1px solid #ccc;
-                }
-              </style>
+            </style>
             <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
             <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
             <script>var define = null;</script>
@@ -50,12 +25,15 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">PICKUP LINE</th>
+                    <th scope="col">TOPIC</th>
                     <th scope="col">WORD COUNT</th>
                 </tr>
               </thead>
             </table>
 
             <script type="text/javascript" class="init">
+
+              var idCount = 0;
 
               var table = document.getElementById("pickup-line-table");
               var send = document.getElementById("send");
@@ -86,16 +64,13 @@
                   }
                   return response.json();
                 }).then(data => {
-                  console.log(data);
                   for (const obj of data) {
-                    console.log("Obj: " + obj);
-                    console.log(obj.id);
-                    console.log(obj.line);
-                    console.log(obj.wordCount);
                     $('#pickup-line-table').append('<tr><td>' + 
-                      obj.id + '</td><td>' + 
+                      idCount + '</td><td>' + 
                       obj.line + '</td><td>' + 
+                      obj.topic + '</td><td>' +
                       obj.wordCount + '</td></tr>');
+                      idCount++;
                   }
                   $("#pickup-line-table").DataTable();
                 })
