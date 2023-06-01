@@ -105,7 +105,7 @@
               console.log(text);
               var botDiv = document.createElement("div");
               botDiv.className = "message bot";
-              botDiv.innerHTML = "<strong>$(bot):</strong> " + text;
+              botDiv.innerHTML = `<strong>${bot}:</strong> ` + text;
               chatbox.appendChild(botDiv);
 
               chatbox.scrollTop = chatbox.scrollHeight;
