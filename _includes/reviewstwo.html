@@ -4,8 +4,7 @@
   <head>
     <title>Matches</title>
     <style>
-
-.heart {
+      .heart {
         width: 100px;
         height: 100px;
         background-color: pink;
@@ -31,8 +30,6 @@
         top: 0;
         left: 50px;
       }
- 
-
     </style>
   </head>
   <body>
@@ -106,35 +103,27 @@
       }
       
       function addMatchButton(name, age, location, pronouns) {
-  const matchContainer = document.getElementById("matchContainer");
-
-  const matchBox = document.createElement("div");
-  matchBox.classList.add("match-box");
-
-  const heart = document.createElement("div");
-  heart.classList.add("heart");
-
-  const matchInfo = document.createElement("div");
-  matchInfo.classList.add("match-info");
-  matchInfo.innerHTML = `
-    <p>name: ${name}</p>
-    <p>age: ${age}</p>
-    <p>location: ${location}</p>
-    <p>pronouns: ${pronouns}</p>
-  `;
-
-  heart.appendChild(matchInfo);
-  matchBox.appendChild(heart);
-  matchContainer.appendChild(matchBox);
-}
-
-function removeMatchButtons() {
-  const matchContainer = document.getElementById("matchContainer");
-  matchContainer.innerHTML = "";
-}
-
-
-
+        const matchContainer = document.getElementById("matchContainer");
+        
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        
+        const matchInfo = document.createElement("div");
+        matchInfo.innerHTML = `
+          <p>name: ${name}</p>
+          <p>age: ${age}</p>
+          <p>location: ${location}</p>
+          <p>pronouns: ${pronouns}</p>
+        `;
+        
+        heart.appendChild(matchInfo);
+        matchContainer.appendChild(heart);
+      }
+      
+      function removeMatchButtons() {
+        const matchContainer = document.getElementById("matchContainer");
+        matchContainer.innerHTML = "";
+      }
     </script>
   </body>
   </html>
