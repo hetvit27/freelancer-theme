@@ -175,11 +175,11 @@
     function thumbsUp(name) {
       // Handle thumbs up action for the match with the given name
       console.log(`Thumbs up for ${name}`);
-      const matchedData = document.getElementById("matchTableBody").innerHTML;
-      document.getElementById("matchTableBody").innerHTML = matchedData.replace(`onclick="thumbsUp('${name}')">&#x1f44d;</button>`, "");
-
       const matchedRow = document.querySelector(`#matchTableBody tr td:first-child:contains('${name}')`).parentNode;
       document.getElementById("likedMatchesTableBody").appendChild(matchedRow.cloneNode(true));
+
+      const thumbsUpButton = matchedRow.querySelector('button[onclick*="thumbsUp"]');
+      thumbsUpButton.parentNode.removeChild(thumbsUpButton);
 
       likedMatches.push(name);
     }
