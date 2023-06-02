@@ -177,7 +177,7 @@
             console.log(`Thumbs up for ${name}`);
             addLikedMatchRow(name, age, location, pronouns);
   
-            const matchedRow = Array.from(document.querySelectorAll('#matchTableBody tr')).find(row => row.querySelector(`td:first-child`).textContent === name);
+            const matchedRow = Array.from(document.querySelectorAll('#matchTableBody tr')).find(row => row.cells[0].textContent === name);
             matchedRow.querySelector('button[onclick*="thumbsUp"]').disabled = true;
   
             likedMatches.push(name);
