@@ -44,6 +44,7 @@
           id="send"
           src="https://d1b1fjiwh8olf2.cloudfront.net/icon/premium/png-256/1374068.png?token=eyJhbGciOiJoczI1NiIsImtpZCI6ImRlZmF1bHQifQ__.eyJpc3MiOiJkMWIxZmppd2g4b2xmMi5jbG91ZGZyb250Lm5ldCIsImV4cCI6MTY4NTgzNjgwMCwicSI6bnVsbCwiaWF0IjoxNjg1NTgyNDI1fQ__.904e8799d1e2d6c0db1818851c43343b43b00f9b8567877086c9f149855d7220"
           alt="Send"
+          onclick="sendMessage()"
         />
       </div>
       <style>
@@ -93,7 +94,15 @@
         var message = document.getElementById("message");
         var send = document.getElementById("send");
 
-        send.addEventListener("click", function () {
+        message.addEventListener("keydown", function (event) {
+          if (event.keyCode === 13 && !event.shiftKey) {
+            // Check if Enter key is pressed without Shift key
+            event.preventDefault(); // Prevent the default behavior of the Enter key
+            sendMessage();
+          }
+        });
+
+        function sendMessage() {
           var userMessage = message.value;
           var userDiv = document.createElement("div");
           userDiv.className = "message user";
@@ -138,7 +147,7 @@
 
               chatbox.scrollTop = chatbox.scrollHeight;
             });
-        });
+        }
       </script>
     </body>
   </html>
