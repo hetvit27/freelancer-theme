@@ -1,5 +1,5 @@
-</section>
-<!DOCTYPE html>
+<section>
+  <!DOCTYPE html>
 <html>
 <head>
   <title>Love Language Quiz</title>
@@ -35,7 +35,7 @@
     }
 
     .question-container {
-      margin-bottom: 20px;
+      display: none;
     }
 
     .progress-bar {
@@ -59,31 +59,40 @@
   </div>
 
   <form id="quiz-form">
-    <h2>Question 1:</h2>
-    <p>Which gesture would make you feel most loved?</p>
-    <label><input type="radio" name="q1" value="words"> Compliments and kind words</label>
-    <label><input type="radio" name="q1" value="quality-time"> Spending quality time together</label>
-    <label><input type="radio" name="q1" value="gifts"> Receiving thoughtful gifts</label>
-    <label><input type="radio" name="q1" value="acts-of-service"> Acts of service and help</label>
-    <label><input type="radio" name="q1" value="physical-touch"> Physical touch and affection</label>
+    <div class="question-container">
+      <h2>Question 1:</h2>
+      <p>Which gesture would make you feel most loved?</p>
+      <label><input type="radio" name="q1" value="words"> Compliments and kind words</label>
+      <label><input type="radio" name="q1" value="quality-time"> Spending quality time together</label>
+      <label><input type="radio" name="q1" value="gifts"> Receiving thoughtful gifts</label>
+      <label><input type="radio" name="q1" value="acts-of-service"> Acts of service and help</label>
+      <label><input type="radio" name="q1" value="physical-touch"> Physical touch and affection</label>
+      <button class="next-button" type="button">Next</button>
+    </div>
 
-    <h2>Question 2:</h2>
-    <p>What makes you feel most appreciated?</p>
-    <label><input type="radio" name="q2" value="words"> Words of affirmation and encouragement</label>
-    <label><input type="radio" name="q2" value="quality-time"> Undivided attention and quality time</label>
-    <label><input type="radio" name="q2" value="gifts"> Receiving thoughtful and meaningful gifts</label>
-    <label><input type="radio" name="q2" value="acts-of-service"> Acts of service and help with tasks</label>
-    <label><input type="radio" name="q2" value="physical-touch"> Physical touch and affectionate gestures</label>
+    <div class="question-container">
+      <h2>Question 2:</h2>
+      <p>What makes you feel most appreciated?</p>
+      <label><input type="radio" name="q2" value="words"> Words of affirmation and encouragement</label>
+      <label><input type="radio" name="q2" value="quality-time"> Undivided attention and quality time</label>
+      <label><input type="radio" name="q2" value="gifts"> Receiving thoughtful and meaningful gifts</label>
+      <label><input type="radio" name="q2" value="acts-of-service"> Acts of service and help with tasks</label>
+      <label><input type="radio" name="q2" value="physical-touch"> Physical touch and affectionate gestures</label>
+      <button class="next-button" type="button">Next</button>
+    </div>
 
-    <h2>Question 3:</h2>
-    <p>How do you typically express love to others?</p>
-    <label><input type="radio" name="q3" value="words"> Through words of affirmation and praise</label>
-    <label><input type="radio" name="q3" value="quality-time"> By spending quality time and giving undivided attention</label>
-    <label><input type="radio" name="q3" value="gifts"> By giving thoughtful and meaningful gifts</label>
-    <label><input type="radio" name="q3" value="acts-of-service"> Through acts of service and helping with tasks</label>
-    <label><input type="radio" name="q3" value="physical-touch"> By showing physical affection and touch</label>
+    <div class="question-container">
+      <h2>Question 3:</h2>
+      <p>How do you typically express love to others?</p>
+      <label><input type="radio" name="q3" value="words"> Through words of affirmation and praise</label>
+      <label><input type="radio" name="q3" value="quality-time"> By spending quality time and giving undivided attention</label>
+      <label><input type="radio" name="q3" value="gifts"> By giving thoughtful and meaningful gifts</label>
+      <label><input type="radio" name="q3" value="acts-of-service"> Through acts of service and helping with tasks</label>
+      <label><input type="radio" name="q3" value="physical-touch"> By showing physical affection and touch</label>
+      <button class="next-button" type="button">Next</button>
+    </div>
 
-    <button type="submit">Submit</button>
+    <button class="submit-button" type="submit" style="display: none;">Submit</button>
   </form>
 
   <div id="result" style="display: none;">
@@ -97,31 +106,31 @@
       {
         question: "Which gesture would make you feel most loved?",
         answers: {
-          words: "Words of Affirmation",
-          "quality-time": "Quality Time",
-          gifts: "Receiving Gifts",
-          "acts-of-service": "Acts of Service",
-          "physical-touch": "Physical Touch"
+          words: "words",
+          "quality-time": "quality-time",
+          gifts: "gifts",
+          "acts-of-service": "acts-of-service",
+          "physical-touch": "physical-touch"
         }
       },
       {
         question: "What makes you feel most appreciated?",
         answers: {
-          words: "Words of Affirmation",
-          "quality-time": "Quality Time",
-          gifts: "Receiving Gifts",
-          "acts-of-service": "Acts of Service",
-          "physical-touch": "Physical Touch"
+          words: "words",
+          "quality-time": "quality-time",
+          gifts: "gifts",
+          "acts-of-service": "acts-of-service",
+          "physical-touch": "physical-touch"
         }
       },
       {
         question: "How do you typically express love to others?",
         answers: {
-          words: "Words of Affirmation",
-          "quality-time": "Quality Time",
-          gifts: "Receiving Gifts",
-          "acts-of-service": "Acts of Service",
-          "physical-touch": "Physical Touch"
+          words: "words",
+          "quality-time": "quality-time",
+          gifts: "gifts",
+          "acts-of-service": "acts-of-service",
+          "physical-touch": "physical-touch"
         }
       }
     ];
@@ -134,14 +143,6 @@
       "acts-of-service": "Acts of Service",
       "physical-touch": "Physical Touch"
     };
-
-    // Randomize the order of questions
-    function shuffleQuestions() {
-      for (let i = questions.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [questions[i], questions[j]] = [questions[j], questions[i]];
-      }
-    }
 
     // Function to calculate love language based on quiz answers
     function calculateLoveLanguage(answers) {
@@ -171,39 +172,6 @@
       return loveLanguage;
     }
 
-    // Function to display a question
-    function displayQuestion(questionNumber) {
-      const questionContainer = document.createElement("div");
-      questionContainer.className = "question-container";
-
-      const questionTitle = document.createElement("h2");
-      questionTitle.textContent = `Question ${questionNumber + 1}:`;
-      questionContainer.appendChild(questionTitle);
-
-      const questionText = document.createElement("p");
-      questionText.textContent = questions[questionNumber].question;
-      questionContainer.appendChild(questionText);
-
-      const answers = questions[questionNumber].answers;
-      for (const answer in answers) {
-        const answerLabel = document.createElement("label");
-        const input = document.createElement("input");
-        input.type = "radio";
-        input.name = `q${questionNumber + 1}`;
-        input.value = answer;
-        answerLabel.appendChild(input);
-        answerLabel.append(` ${answers[answer]}`);
-        questionContainer.appendChild(answerLabel);
-      }
-
-      const quizForm = document.getElementById("quiz-form");
-      quizForm.innerHTML = "";
-      quizForm.appendChild(questionContainer);
-
-      const progressBarFill = document.getElementById("progress-bar-fill");
-      progressBarFill.style.width = `${(questionNumber / questions.length) * 100}%`;
-    }
-
     // Function to handle form submission
     function handleSubmit(event) {
       event.preventDefault();
@@ -226,13 +194,38 @@
       resultDiv.style.display = "block";
     }
 
+    // Function to handle next button click
+    function handleNextButtonClick(event) {
+      const currentQuestionContainer = event.target.closest(".question-container");
+      const nextQuestionContainer = currentQuestionContainer.nextElementSibling;
+
+      if (nextQuestionContainer) {
+        currentQuestionContainer.style.display = "none";
+        nextQuestionContainer.style.display = "block";
+
+        const progressBarFill = document.getElementById("progress-bar-fill");
+        const questionContainers = Array.from(document.getElementsByClassName("question-container"));
+        const questionIndex = questionContainers.indexOf(nextQuestionContainer);
+        const progressPercentage = (questionIndex / (questionContainers.length - 1)) * 100;
+        progressBarFill.style.width = progressPercentage + "%";
+
+        if (!nextQuestionContainer.nextElementSibling) {
+          // Last question, show the submit button
+          const submitButton = document.querySelector(".submit-button");
+          submitButton.style.display = "block";
+        }
+      }
+    }
+
     // Attach form submission event listener
     const quizForm = document.getElementById("quiz-form");
     quizForm.addEventListener("submit", handleSubmit);
 
-    // Start the quiz
-    shuffleQuestions();
-    displayQuestion(0);
+    // Attach next button click event listeners
+    const nextButtons = Array.from(document.getElementsByClassName("next-button"));
+    nextButtons.forEach(button => {
+      button.addEventListener("click", handleNextButtonClick);
+    });
   </script>
 </body>
 </html>
