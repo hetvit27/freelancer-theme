@@ -50,9 +50,24 @@
     <tbody id="matchTableBody"></tbody>
   </table>
   
+  <h2>Liked Matches</h2>
+  <table id="likedMatchesTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Location</th>
+        <th>Pronouns</th>
+      </tr>
+    </thead>
+    <tbody id="likedMatchesTableBody"></tbody>
+  </table>
+  
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
   <script>
+    var likedMatches = [];
+
     function refreshTable() {
       const options = {
         method: 'GET',
@@ -131,6 +146,20 @@
       tableBody.appendChild(row);
     }
 
+    function addLikedMatchRow(name, age, location, pronouns) {
+      const tableBody = document.getElementById("likedMatchesTableBody");
+
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${name}</td>
+        <td>${age}</td>
+        <td>${location}</td>
+        <td>${pronouns}</td>
+      `;
+
+      tableBody.appendChild(row);
+    }
+
     function initializeTable() {
       $('#matchTable').DataTable({
         columnDefs: [{
@@ -146,6 +175,13 @@
     function thumbsUp(name) {
       // Handle thumbs up action for the match with the given name
       console.log(`Thumbs up for ${name}`);
+      const matchedData = document.getElementById("matchTableBody").innerHTML;
+      document.getElementById("matchTableBody").innerHTML = matchedData.replace(`onclick="thumbsUp('${name}')">&#x1f44d;</button>`, "");
+
+      const matchedRow = document.querySelector(`#matchTableBody tr td:first-child:contains('${name}')`).parentNode;
+      document.getElementById("likedMatchesTableBody").appendChild(matchedRow.cloneNode(true));
+
+      likedMatches.push(name);
     }
 
     function thumbsDown(name) {
