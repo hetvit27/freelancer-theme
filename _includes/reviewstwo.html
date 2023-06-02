@@ -1,4 +1,4 @@
-<section>
+</section>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,10 +33,31 @@
       font-weight: bold;
       font-size: 18px;
     }
+
+    .question-container {
+      margin-bottom: 20px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      background-color: #ddd;
+      height: 20px;
+      margin-bottom: 10px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background-color: #4CAF50;
+      transition: width 0.3s;
+    }
   </style>
 </head>
 <body>
   <h1>Love Language Quiz</h1>
+  <div class="progress-bar">
+    <div id="progress-bar-fill" class="progress-bar-fill" style="width: 0;"></div>
+  </div>
+
   <form id="quiz-form">
     <h2>Question 1:</h2>
     <p>Which gesture would make you feel most loved?</p>
@@ -76,31 +97,31 @@
       {
         question: "Which gesture would make you feel most loved?",
         answers: {
-          words: "words",
-          "quality-time": "quality-time",
-          gifts: "gifts",
-          "acts-of-service": "acts-of-service",
-          "physical-touch": "physical-touch"
+          words: "Words of Affirmation",
+          "quality-time": "Quality Time",
+          gifts: "Receiving Gifts",
+          "acts-of-service": "Acts of Service",
+          "physical-touch": "Physical Touch"
         }
       },
       {
         question: "What makes you feel most appreciated?",
         answers: {
-          words: "words",
-          "quality-time": "quality-time",
-          gifts: "gifts",
-          "acts-of-service": "acts-of-service",
-          "physical-touch": "physical-touch"
+          words: "Words of Affirmation",
+          "quality-time": "Quality Time",
+          gifts: "Receiving Gifts",
+          "acts-of-service": "Acts of Service",
+          "physical-touch": "Physical Touch"
         }
       },
       {
         question: "How do you typically express love to others?",
         answers: {
-          words: "words",
-          "quality-time": "quality-time",
-          gifts: "gifts",
-          "acts-of-service": "acts-of-service",
-          "physical-touch": "physical-touch"
+          words: "Words of Affirmation",
+          "quality-time": "Quality Time",
+          gifts: "Receiving Gifts",
+          "acts-of-service": "Acts of Service",
+          "physical-touch": "Physical Touch"
         }
       }
     ];
@@ -113,6 +134,14 @@
       "acts-of-service": "Acts of Service",
       "physical-touch": "Physical Touch"
     };
+
+    // Randomize the order of questions
+    function shuffleQuestions() {
+      for (let i = questions.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [questions[i], questions[j]] = [questions[j], questions[i]];
+      }
+    }
 
     // Function to calculate love language based on quiz answers
     function calculateLoveLanguage(answers) {
@@ -142,6 +171,39 @@
       return loveLanguage;
     }
 
+    // Function to display a question
+    function displayQuestion(questionNumber) {
+      const questionContainer = document.createElement("div");
+      questionContainer.className = "question-container";
+
+      const questionTitle = document.createElement("h2");
+      questionTitle.textContent = `Question ${questionNumber + 1}:`;
+      questionContainer.appendChild(questionTitle);
+
+      const questionText = document.createElement("p");
+      questionText.textContent = questions[questionNumber].question;
+      questionContainer.appendChild(questionText);
+
+      const answers = questions[questionNumber].answers;
+      for (const answer in answers) {
+        const answerLabel = document.createElement("label");
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = `q${questionNumber + 1}`;
+        input.value = answer;
+        answerLabel.appendChild(input);
+        answerLabel.append(` ${answers[answer]}`);
+        questionContainer.appendChild(answerLabel);
+      }
+
+      const quizForm = document.getElementById("quiz-form");
+      quizForm.innerHTML = "";
+      quizForm.appendChild(questionContainer);
+
+      const progressBarFill = document.getElementById("progress-bar-fill");
+      progressBarFill.style.width = `${(questionNumber / questions.length) * 100}%`;
+    }
+
     // Function to handle form submission
     function handleSubmit(event) {
       event.preventDefault();
@@ -167,6 +229,10 @@
     // Attach form submission event listener
     const quizForm = document.getElementById("quiz-form");
     quizForm.addEventListener("submit", handleSubmit);
+
+    // Start the quiz
+    shuffleQuestions();
+    displayQuestion(0);
   </script>
 </body>
 </html>
