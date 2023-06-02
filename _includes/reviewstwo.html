@@ -1,195 +1,172 @@
 <section>
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
-  <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-</head>
-<head>
-  <title>Matches</title>
+  <title>Love Language Quiz</title>
   <style>
-    .button {
-      width: 200px;
-      height: 200px;
-      background-color: rgb(249, 208, 214);
-      display: inline-block;
-      margin: 10px;
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    h1 {
       text-align: center;
     }
-    .rizz-button {
-      color: #333;
+
+    form {
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin-top: 20px;
+    }
+
+    button {
+      margin-top: 20px;
+    }
+
+    #result {
+      text-align: center;
+    }
+
+    #love-language-text {
+      font-weight: bold;
+      font-size: 18px;
     }
   </style>
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
 </head>
 <body>
-  <br> 
-  <br>
-  <br>
-  <br>
-  <h1>Matches</h1>
-  <br>
-  <input id="name" placeholder="name">
-  <input id="age" placeholder="age">
-  <input id="location" placeholder="location">
-  <input id="pronouns" placeholder="pronouns">
-  <button onclick="addMatch()">Save</button>
-  <br>
-  <br>
-  
-  <table id="matchTable">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Age</th>
-        <th>Location</th>
-        <th>Pronouns</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody id="matchTableBody"></tbody>
-  </table>
-  
-  <h2>Liked Matches</h2>
-  <table id="likedMatchesTable">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Age</th>
-        <th>Location</th>
-        <th>Pronouns</th>
-      </tr>
-    </thead>
-    <tbody id="likedMatchesTableBody"></tbody>
-  </table>
-  
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+  <h1>Love Language Quiz</h1>
+  <form id="quiz-form">
+    <h2>Question 1:</h2>
+    <p>Which gesture would make you feel most loved?</p>
+    <label><input type="radio" name="q1" value="words"> Compliments and kind words</label>
+    <label><input type="radio" name="q1" value="quality-time"> Spending quality time together</label>
+    <label><input type="radio" name="q1" value="gifts"> Receiving thoughtful gifts</label>
+    <label><input type="radio" name="q1" value="acts-of-service"> Acts of service and help</label>
+    <label><input type="radio" name="q1" value="physical-touch"> Physical touch and affection</label>
+
+    <h2>Question 2:</h2>
+    <p>What makes you feel most appreciated?</p>
+    <label><input type="radio" name="q2" value="words"> Words of affirmation and encouragement</label>
+    <label><input type="radio" name="q2" value="quality-time"> Undivided attention and quality time</label>
+    <label><input type="radio" name="q2" value="gifts"> Receiving thoughtful and meaningful gifts</label>
+    <label><input type="radio" name="q2" value="acts-of-service"> Acts of service and help with tasks</label>
+    <label><input type="radio" name="q2" value="physical-touch"> Physical touch and affectionate gestures</label>
+
+    <h2>Question 3:</h2>
+    <p>How do you typically express love to others?</p>
+    <label><input type="radio" name="q3" value="words"> Through words of affirmation and praise</label>
+    <label><input type="radio" name="q3" value="quality-time"> By spending quality time and giving undivided attention</label>
+    <label><input type="radio" name="q3" value="gifts"> By giving thoughtful and meaningful gifts</label>
+    <label><input type="radio" name="q3" value="acts-of-service"> Through acts of service and helping with tasks</label>
+    <label><input type="radio" name="q3" value="physical-touch"> By showing physical affection and touch</label>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <div id="result" style="display: none;">
+    <h2>Your Love Language:</h2>
+    <p id="love-language-text"></p>
+  </div>
+
   <script>
-    var likedMatches = [];
+    // Questions and their love language mappings
+    const questions = [
+      {
+        question: "Which gesture would make you feel most loved?",
+        answers: {
+          words: "words",
+          "quality-time": "quality-time",
+          gifts: "gifts",
+          "acts-of-service": "acts-of-service",
+          "physical-touch": "physical-touch"
+        }
+      },
+      {
+        question: "What makes you feel most appreciated?",
+        answers: {
+          words: "words",
+          "quality-time": "quality-time",
+          gifts: "gifts",
+          "acts-of-service": "acts-of-service",
+          "physical-touch": "physical-touch"
+        }
+      },
+      {
+        question: "How do you typically express love to others?",
+        answers: {
+          words: "words",
+          "quality-time": "quality-time",
+          gifts: "gifts",
+          "acts-of-service": "acts-of-service",
+          "physical-touch": "physical-touch"
+        }
+      }
+    ];
 
-    function refreshTable() {
-      const options = {
-        method: 'GET',
-        cache: 'default',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+    // Love languages and their descriptions
+    const loveLanguages = {
+      words: "Words of Affirmation",
+      "quality-time": "Quality Time",
+      gifts: "Receiving Gifts",
+      "acts-of-service": "Acts of Service",
+      "physical-touch": "Physical Touch"
+    };
+
+    // Function to calculate love language based on quiz answers
+    function calculateLoveLanguage(answers) {
+      const loveLanguageCount = {
+        words: 0,
+        "quality-time": 0,
+        gifts: 0,
+        "acts-of-service": 0,
+        "physical-touch": 0
       };
 
-      const url = "https://dating.dontntntnt.de/api/matches/";
+      for (let i = 0; i < questions.length; i++) {
+        const answer = answers["q" + (i + 1)];
+        loveLanguageCount[answer]++;
+      }
 
-      fetch(url, options)
-        .then(res => res.json())
-        .then(data => {
-          console.log(data);
-          console.log(typeof data);
-          console.log(JSON.stringify(data));
+      // Find the love language with the highest count
+      let maxCount = 0;
+      let loveLanguage = "";
+      for (const language in loveLanguageCount) {
+        if (loveLanguageCount[language] > maxCount) {
+          maxCount = loveLanguageCount[language];
+          loveLanguage = language;
+        }
+      }
 
-          const tableBody = document.getElementById("matchTableBody");
-          tableBody.innerHTML = ""; // Clear the table body before populating new data
-
-          for (let i = 0; i < data.length; i++) {
-            addMatchRow(data[i].name, data[i].age, data[i].location, data[i].pronouns);
-          }
-
-          initializeTable();
-        });
+      return loveLanguage;
     }
 
-    function addMatch() {
-      const postOptions = {
-        method: 'POST',
-        cache: 'default',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      };
+    // Function to handle form submission
+    function handleSubmit(event) {
+      event.preventDefault();
 
-      var url = "https://dating.dontntntnt.de/api/matches/add";
-      url += "?name=" + encodeURIComponent(document.getElementById("name").value);
-      url += "&age=" + encodeURIComponent(document.getElementById("age").value);
-      url += "&location=" + encodeURIComponent(document.getElementById("location").value);
-      url += "&pronouns=" + encodeURIComponent(document.getElementById("pronouns").value);
+      const form = document.getElementById("quiz-form");
+      const formData = new FormData(form);
 
-      fetch(url, postOptions)
-        .then(response => {
-          if (response.status !== 200) {
-            alert("PUT API response failure: " + response.status);
-            return;
-          }
-          response.json().then(data => {
-            console.log(data);
-            refreshTable(); // Call the refreshTable() function to update the table with the new data
-          });
-        })
-        .catch(err => {
-          console.log(err + " ");
-        });
+      const answers = {};
+      for (const pair of formData) {
+        answers[pair[0]] = pair[1];
+      }
+
+      const loveLanguage = calculateLoveLanguage(answers);
+      const loveLanguageText = loveLanguages[loveLanguage];
+
+      const resultDiv = document.getElementById("result");
+      const loveLanguageTextElem = document.getElementById("love-language-text");
+      loveLanguageTextElem.textContent = loveLanguageText;
+
+      resultDiv.style.display = "block";
     }
 
-    function addMatchRow(name, age, location, pronouns) {
-      const tableBody = document.getElementById("matchTableBody");
-
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${name}</td>
-        <td>${age}</td>
-        <td>${location}</td>
-        <td>${pronouns}</td>
-        <td>
-          <button onclick="thumbsUp('${name}')">&#x1f44d;</button>
-          <button onclick="thumbsDown('${name}')">&#x1f44e;</button>
-        </td>
-      `;
-
-      tableBody.appendChild(row);
-    }
-
-    function addLikedMatchRow(name, age, location, pronouns) {
-      const tableBody = document.getElementById("likedMatchesTableBody");
-
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${name}</td>
-        <td>${age}</td>
-        <td>${location}</td>
-        <td>${pronouns}</td>
-      `;
-
-      tableBody.appendChild(row);
-    }
-
-    function initializeTable() {
-      $('#matchTable').DataTable({
-        columnDefs: [{
-          targets: 3,
-          type: 'html',
-          render: function (data, type, row) {
-            return data;
-          }
-        }]
-      });
-    }
-
-    function thumbsUp(name) {
-      // Handle thumbs up action for the match with the given name
-      console.log(`Thumbs up for ${name}`);
-      const matchedRow = document.querySelector(`#matchTableBody tr td:first-child:contains('${name}')`).parentNode;
-      document.getElementById("likedMatchesTableBody").appendChild(matchedRow.cloneNode(true));
-
-      const thumbsUpButton = matchedRow.querySelector('button[onclick*="thumbsUp"]');
-      thumbsUpButton.parentNode.removeChild(thumbsUpButton);
-
-      likedMatches.push(name);
-    }
-
-    function thumbsDown(name) {
-      // Handle thumbs down action for the match with the given name
-      console.log(`Thumbs down for ${name}`);
-    }
-
-    refreshTable(); // Call the refreshTable() function initially to populate the table
+    // Attach form submission event listener
+    const quizForm = document.getElementById("quiz-form");
+    quizForm.addEventListener("submit", handleSubmit);
   </script>
 </body>
 </html>
