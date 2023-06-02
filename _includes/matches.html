@@ -171,17 +171,18 @@
               }]
             });
           }
-  
           function thumbsUp(name, age, location, pronouns) {
-            // Handle thumbs up action for the match with the given name
             console.log(`Thumbs up for ${name}`);
             addLikedMatchRow(name, age, location, pronouns);
-  
-            const matchedRow = Array.from(document.querySelectorAll('#matchTableBody tr')).find(row => row.cells[0].textContent === name);
-            matchedRow.querySelector('button[onclick*="thumbsUp"]').disabled = true;
-  
+
+            const matchedRow = Array.from(document.querySelectorAll('#matchTableBody tr')).find(row => row.cells[0].textContent.includes(name));
+            if (matchedRow) {
+              matchedRow.querySelector('button[onclick*="thumbsUp"]').disabled = true;
+            }
+
             likedMatches.push(name);
           }
+
   
           function thumbsDown(name) {
             // Handle thumbs down action for the match with the given name
