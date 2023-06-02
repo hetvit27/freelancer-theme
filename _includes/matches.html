@@ -171,16 +171,21 @@
               }]
             });
           }
-          function thumbsUp(name, age, location, pronouns) {
-            console.log(`Thumbs up for ${name}`);
-            addLikedMatchRow(name, age, location, pronouns);
-
-            const matchedRow = Array.from(document.querySelectorAll('#matchTableBody tr')).find(row => row.cells[0].textContent.includes(name));
-            if (matchedRow) {
-              matchedRow.querySelector('button[onclick*="thumbsUp"]').disabled = true;
-            }
-
-            likedMatches.push(name);
+          function thumbsUp(name) {
+              console.log(`Thumbs up for ${name}`);
+              
+              const rows = document.querySelectorAll('#matchTableBody tr');
+              for (let i = 0; i < rows.length; i++) {
+                  const row = rows[i];
+                  const firstCell = row.querySelector('td:first-child');
+                  if (firstCell.textContent.trim() === name) {
+                      document.getElementById("likedMatchesTableBody").appendChild(row.cloneNode(true));
+                      row.parentNode.removeChild(row);
+                      break;
+                  }
+              }
+              
+              likedMatches.push(name);
           }
 
   
