@@ -72,8 +72,8 @@
 
         img#send {
           margin-left: 10px;
-          width: 20px;
-          height: 20px;
+          width: 60px;
+          height: 60px;
         }
       </style>
       <script>
@@ -122,7 +122,7 @@
           var thinkingMessage = document.createElement("div");
 
           thinkingMessage.className = "thinking message";
-          thinkingMessage.innerHTML = "<strong>${bot}:</strong> Thinking...";
+          thinkingMessage.innerHTML = `<strong>${bot}:</strong> Thinking...`;
 
           chatbox.appendChild(thinkingMessage);
           fetch(url, requestOptions)
