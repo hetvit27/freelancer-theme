@@ -1,3 +1,4 @@
+<section>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,6 +44,7 @@
         <th>Age</th>
         <th>Location</th>
         <th>Pronouns</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody id="matchTableBody"></tbody>
@@ -120,6 +122,10 @@
         <td>${age}</td>
         <td>${location}</td>
         <td>${pronouns}</td>
+        <td>
+          <button onclick="thumbsUp('${name}')">&#x1f44d;</button>
+          <button onclick="thumbsDown('${name}')">&#x1f44e;</button>
+        </td>
       `;
 
       tableBody.appendChild(row);
@@ -137,7 +143,18 @@
       });
     }
 
+    function thumbsUp(name) {
+      // Handle thumbs up action for the match with the given name
+      console.log(`Thumbs up for ${name}`);
+    }
+
+    function thumbsDown(name) {
+      // Handle thumbs down action for the match with the given name
+      console.log(`Thumbs down for ${name}`);
+    }
+
     refreshTable(); // Call the refreshTable() function initially to populate the table
   </script>
 </body>
 </html>
+</section>
