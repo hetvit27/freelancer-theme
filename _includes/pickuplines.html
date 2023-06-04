@@ -20,6 +20,9 @@
             <br>
             <button id="send">Generate</button>
 
+            <br>
+            <br>
+
             <img id="loading" src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="loading" style="display:none;">
             <iframe id="loading" src="https://giphy.com/embed/jWRnA7aBoUOvsiAzJB" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/VisitMississauga-heart-heartbeat-beating-jWRnA7aBoUOvsiAzJB"></a></p>
 
@@ -69,6 +72,7 @@
                 myHeaders.append("Content-Type", "application/json");
 
                 // Insert url here
+                toggleLoading();
                 fetch("https://dating.dontntntnt.de/api/chat/generateLines", {
                   method: "POST",
                   headers: myHeaders,
@@ -86,7 +90,6 @@
                   }
                   return response.json();
                 }).then(data => {
-                  toggleLoading();
                   for (const obj of data) {
                     line = obj.line;
                     line = line.replace("\"", "\\\"");
@@ -98,13 +101,14 @@
                       obj.wordCount + '</td></tr>');
                       idCount++;
                   }
-                  toggleLoading();
                   $("#pickup-line-table").DataTable();
                 })
                 .catch(error => {
                   console.error(error);
                 })
+                toggleLoading();
                 });
+
 
             </script>
 
