@@ -72,6 +72,7 @@
                 myHeaders.append("Content-Type", "application/json");
 
                 // Insert url here
+                console.log("Start load")
                 toggleLoading();
                 fetch("https://dating.dontntntnt.de/api/chat/generateLines", {
                   method: "POST",
@@ -106,6 +107,7 @@
                 .catch(error => {
                   console.error(error);
                 })
+                console.log("End load")
                 toggleLoading();
                 });
 
