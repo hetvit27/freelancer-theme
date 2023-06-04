@@ -42,11 +42,9 @@
             <script type="text/javascript" class="init">
 
               var idCount = 0;
-              var toggle = true;
 
               var table = document.getElementById("pickup-line-table");
               var send = document.getElementById("send");
-              var loading = document.getElementById("loading");
 
               function copyText(text) {
                 navigator.clipboard.writeText(text);
@@ -54,14 +52,14 @@
 
               function toggleLoading() {
 
-                if (toggle) {
+                var loading = document.getElementById("loading");
+
+                if (loading.style.display === "none") {
                   console.log(toggle);
                   loading.style.display = "block";
-                  toggle = false;
                 } else {
                   loading.style.display = "none";
                   console.log(toggle);
-                  toggle = true;
                 }
               }
 
