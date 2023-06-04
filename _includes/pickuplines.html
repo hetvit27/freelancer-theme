@@ -94,7 +94,7 @@
                   for (const obj of data) {
                     line = obj.line;
                     adjusted_line = line.replace("\"", "\\\"");
-                    adjusted_line = line.replace("\'", "\\\'");
+                    adjusted_line = adjusted_line.replace("\'", "\\\'");
                     $('#pickup-line-table').append('<tr><td>' + 
                       idCount + '</td><td>' + 
                       "<a href=\"javascript:copyText('" + adjusted_line + "')\">" + line + "</a>" + '</td><td>' + 
