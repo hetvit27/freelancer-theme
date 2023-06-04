@@ -21,7 +21,7 @@
             <button id="send">Generate</button>
 
             <img id="loading" src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="loading" style="display:none;">
-            <iframe id="loading" style="display:none;" src="https://giphy.com/embed/jWRnA7aBoUOvsiAzJB" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/VisitMississauga-heart-heartbeat-beating-jWRnA7aBoUOvsiAzJB"></a></p>
+            <iframe id="loading" src="https://giphy.com/embed/jWRnA7aBoUOvsiAzJB" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/VisitMississauga-heart-heartbeat-beating-jWRnA7aBoUOvsiAzJB"></a></p>
 
             <br>
             <br>
@@ -98,8 +98,8 @@
                       obj.wordCount + '</td></tr>');
                       idCount++;
                   }
-                  $("#pickup-line-table").DataTable();
                   toggleLoading();
+                  $("#pickup-line-table").DataTable();
                 })
                 .catch(error => {
                   console.error(error);
