@@ -22,7 +22,7 @@
             <br>
             <br>
 
-            <img id="loading" src="https://img.freepik.com/premium-vector/cute-kawaii-happy-pink-heart_91515-65.jpg" width="225" height="240" frameBorder="0" style="display: block;"></img>
+            <img id="loading" src="https://img.freepik.com/premium-vector/cute-kawaii-happy-pink-heart_91515-65.jpg" width="225" height="240" frameBorder="0" style="display: none;"></img>
 
             <br>
             <br>
@@ -93,8 +93,8 @@
                 }).then(data => {
                   for (const obj of data) {
                     line = obj.line;
-                    line = line.replace("\"", "\\\\\"");
-                    line = line.replace("\'", "\\\\\'");
+                    line = line.replace("\"", "\\\"");
+                    line = line.replace("\'", "\\\'");
                     $('#pickup-line-table').append('<tr><td>' + 
                       idCount + '</td><td>' + 
                       "<a href=\"javascript:copyText('" + line + "')\">" + line + "</a>" + '</td><td>' + 
@@ -108,8 +108,8 @@
                   console.error(error);
                 })
                 console.log("End load")
-                wait(5000);
-                toggleLoading();
+                setTimeout(() => { toggleLoading();; }, 3000);
+                
                 });
 
 
