@@ -71,10 +71,10 @@
                   for (const obj of data) {
                     line = obj.line;
                     line = line.replace("\"", "\\\"");
-                    line = line.replace("\'", "\\\'");
+                    // line = line.replace("\'", "\\\'");
                     $('#pickup-line-table').append('<tr><td>' + 
                       idCount + '</td><td>' + 
-                      "<a href=\"javascript:null\" onclick=\'javascript:copyText(\"" + line + "\")\'>" + line + "</a>" + '</td><td>' + 
+                      "<a href=\"javascript:null\" onclick=\"javascript:copyText('" + line + "')\">" + line + "</a>" + '</td><td>' + 
                       obj.topic + '</td><td>' +
                       obj.wordCount + '</td></tr>');
                       idCount++;
