@@ -38,6 +38,10 @@
               var table = document.getElementById("pickup-line-table");
               var send = document.getElementById("send");
 
+              function copyText(text) {
+                navigator.clipboard.writeText(text);
+              }
+
               send.addEventListener("click", function() {
 
                 var topic = document.getElementById("topic").value;
@@ -68,7 +72,7 @@
                     $('#pickup-line-table').append('<tr><td>' + 
                       idCount + '</td><td>' + 
                       obj.line + '</td><td>' + 
-                      obj.topic + '</td><td>' +
+                      "<a href='copyText(" + obj.topic + ")'>" + obj.topic + "</a>" + '</td><td>' +
                       obj.wordCount + '</td></tr>');
                       idCount++;
                   }
