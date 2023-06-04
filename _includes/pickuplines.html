@@ -20,6 +20,8 @@
             <br>
             <button id="send">Generate</button>
 
+            <img id="loading" src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="loading" style="display:none;">
+
             <table id="pickup-line-table">
               <thead>
                 <tr>
@@ -34,12 +36,23 @@
             <script type="text/javascript" class="init">
 
               var idCount = 0;
+              var toggle = true;
 
               var table = document.getElementById("pickup-line-table");
               var send = document.getElementById("send");
 
               function copyText(text) {
                 navigator.clipboard.writeText(text);
+              }
+
+              function toggleLoading() {
+                if (toggle) {
+                  document.getElementById("loading").style.display = "block";
+                  toggle = false;
+                } else {
+                  document.getElementById("loading").style.display = "none";
+                  toggle = true;
+                }
               }
 
               send.addEventListener("click", function() {
@@ -68,6 +81,7 @@
                   }
                   return response.json();
                 }).then(data => {
+                  toggleLoading();
                   for (const obj of data) {
                     line = obj.line;
                     line = line.replace("\"", "\\\"");
@@ -80,6 +94,7 @@
                       idCount++;
                   }
                   $("#pickup-line-table").DataTable();
+                  toggleLoading();
                 })
                 .catch(error => {
                   console.error(error);
