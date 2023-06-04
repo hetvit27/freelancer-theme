@@ -70,8 +70,8 @@
                 }).then(data => {
                   for (const obj of data) {
                     line = obj.line;
-                    line = line.replace("\"", "\\\"");
-                    // line = line.replace("\'", "\\\'");
+                    // line = line.replace("\"", "\\\"");
+                    line = line.replace("\'", "\\\'");
                     $('#pickup-line-table').append('<tr><td>' + 
                       idCount + '</td><td>' + 
                       "<a href=\"javascript:copyText('" + line + "')\">" + line + "</a>" + '</td><td>' + 
