@@ -47,17 +47,21 @@
 
               var table = document.getElementById("pickup-line-table");
               var send = document.getElementById("send");
+              var loading = document.getElementById("loading");
 
               function copyText(text) {
                 navigator.clipboard.writeText(text);
               }
 
               function toggleLoading() {
+
                 if (toggle) {
-                  document.getElementById("loading").style.display = "block";
+                  console.log(toggle);
+                  loading.style.display = "block";
                   toggle = false;
                 } else {
-                  document.getElementById("loading").style.display = "none";
+                  loading.style.display = "none";
+                  console.log(toggle);
                   toggle = true;
                 }
               }
