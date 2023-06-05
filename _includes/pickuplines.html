@@ -7,7 +7,6 @@
             </style>
             <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
             <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-            <script>var define = null;</script>
             <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
         </head>
         <body>
@@ -19,6 +18,15 @@
             <input type="text" id="numLines" placeholder="1"/>
             <br>
             <button id="send">Generate</button>
+
+            <br>
+            <br>
+
+            <img id="loading" src="https://img.freepik.com/premium-vector/cute-kawaii-happy-pink-heart_91515-65.jpg" width="225" height="240" frameBorder="0" style="display: none;"></img>
+
+            <br>
+            <br>
+            <br>
 
             <table id="pickup-line-table">
               <thead>
@@ -38,6 +46,23 @@
               var table = document.getElementById("pickup-line-table");
               var send = document.getElementById("send");
 
+              function copyText(text) {
+                navigator.clipboard.writeText(text);
+              }
+
+              function toggleLoading() {
+
+                var loading = document.getElementById("loading");
+
+                if (loading.style.display === "none") {
+                  console.log("On")
+                  loading.style.display = "block";
+                } else {
+                  console.log("Off")
+                  loading.style.display = "none";
+                }
+              }
+
               send.addEventListener("click", function() {
 
                 var topic = document.getElementById("topic").value;
@@ -47,6 +72,8 @@
                 myHeaders.append("Content-Type", "application/json");
 
                 // Insert url here
+                console.log("Start load")
+                toggleLoading();
                 fetch("https://dating.dontntntnt.de/api/chat/generateLines", {
                   method: "POST",
                   headers: myHeaders,
@@ -65,9 +92,12 @@
                   return response.json();
                 }).then(data => {
                   for (const obj of data) {
+                    line = obj.line;
+                    // adjusted_line = line.replace("\"", "\\\"");
+                    adjusted_line = line.replace("\'", "\\\'");
                     $('#pickup-line-table').append('<tr><td>' + 
                       idCount + '</td><td>' + 
-                      obj.line + '</td><td>' + 
+                      "<a href=\"javascript:copyText(\'" + adjusted_line + "\')\">" + line + "</a>" + '</td><td>' + 
                       obj.topic + '</td><td>' +
                       obj.wordCount + '</td></tr>');
                       idCount++;
@@ -77,7 +107,11 @@
                 .catch(error => {
                   console.error(error);
                 })
+                console.log("End load")
+                setTimeout(() => { toggleLoading();; }, 5000);
+                
                 });
+
 
             </script>
 

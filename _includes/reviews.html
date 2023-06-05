@@ -1,117 +1,201 @@
 <section>
+<!DOCTYPE html>
+<html>
 <head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 </head>
+<body>
+    <br> 
+    <br>
+    <br>
+    <br>
+    <h1>Matches</h1>
+    <br>
+    <input id="reviewername" placeholder="name">
+    <input id="age" placeholder="age">
+    <input id="reviewtext" placeholder="review">
+    <input id="contact" placeholder="contact">
+    <button onclick="addReview()">Save</button>
+    <br>
+    <br>
 
-<input id="search" placeholder="Search">
-<button onclick="search()">Search</button>
-<br>
-<br>
-<input id="reviewername" placeholder="Reviewer Name">
-<input id="age" placeholder="Age">
-<input id="reviewtext" placeholder="Review">
-<input id="contact" placeholder="Contact">
-<button onclick="addReview()">Save</button>
-<br>
-<br>
+    <table id="reviewTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Review</th>
+                <th>Contact</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="reviewTableBody"></tbody>
+    </table>
 
-<!-- Create table to display question posts -->
+    <h2>Liked Reviews</h2>
+    <table id="likedReviewsTable" class="display">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Review</th>
+                <th>Contact</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="likedReviewsTableBody"></tbody>
+    </table>
 
-<table id="reviewTable" border="1" style="border-collapse: collapse;">
-		<tr>
-				<th>Reviewer Name</th>
-				<th>Age</th>
-				<th>Review</th>
-				<th>Contact</th>
-		</tr>
-</table>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        var likedReviews = [];
 
-<script>
-  Review();
-  function Review() {
-  	const options = {
-                method: 'GET', // *GET, POST, PUT, DELETE, etc.
-                mode: 'no-cors', // no-cors, *cors, same-origin
-                cache: 'default', // *default, no-cache, reload, force-cache, only-if-cached
-                // credentials: 'same-origin', // include, same-origin, omit
+        function refreshTable() {
+            const options = {
+                method: 'GET',
+                cache: 'default',
                 headers: {
-                'Content-Type': 'application/json'
-                // 'Content-Type': 'application/x-www-form-urlencoded',
+                    'Content-Type': 'application/json'
                 },
             };
-          const url = "https://dating.dontntntnt.de/api/review/";
-          fetch(url, options)
-            .then(res => res.json())
-            .then(data => {
-            console.log(data);
-            console.log(typeof data);
-            console.log(JSON.stringify(data));
-            for (let i = 0; i < data.length; i++) {
-              addTableRow(data[i].reviewername, data[i].age, data[i].reviewtext, data[i].contact);
+
+            const url = "https://dating.dontntntnt.de/api/review/";
+
+            fetch(url, options)
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                    console.log(typeof data);
+                    console.log(JSON.stringify(data));
+
+                    const tableBody = document.getElementById("reviewTableBody");
+                    tableBody.innerHTML = ""; // Clear the table body before populating new data
+
+                    for (let i = 0; i < data.length; i++) {
+                        addReviewRow(data[i].reviewername, data[i].age, data[i].reviewtext, data[i].contact);
+                    }
+
+                    initializeTable();
+                });
+        }
+
+        function addReview() {
+            const postOptions = {
+                method: 'POST',
+                cache: 'default',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            };
+
+            var url = "https://dating.dontntntnt.de/api/review/add";
+            url += "?reviewername=" + encodeURIComponent(document.getElementById("reviewername").value);
+            url += "&age=" + encodeURIComponent(document.getElementById("age").value);
+            url += "&reviewtext=" + encodeURIComponent(document.getElementById("reviewtext").value);
+            url += "&contact=" + encodeURIComponent(document.getElementById("contact").value);
+
+            fetch(url, postOptions)
+                .then(response => {
+                    if (response.status !== 200) {
+                        alert("PUT API response failure: " + response.status);
+                        return;
+                    }
+                    response.json().then(data => {
+                        console.log(data);
+                        refreshTable(); // Call the refreshTable() function to update the table with the new data
+                    });
+                })
+                .catch(err => {
+                    console.log(err + " ");
+                });
+        }
+
+        function addReviewRow(reviewername, age, reviewtext, contact) {
+            const tableBody = document.getElementById("reviewTableBody");
+
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${reviewername}</td>
+                <td>${age}</td>
+                <td>${reviewtext}</td>
+                <td>${contact}</td>
+                <td>
+                    <button onclick="thumbsUp('${reviewername}', '${age}', '${reviewtext}', '${contact}')">&#x1f44d;</button>
+                    <button onclick="thumbsDown('${reviewername}')">&#x1f44e;</button>
+                </td>
+            `;
+
+            tableBody.appendChild(row);
+        }
+
+        function addLikedReviewRow(reviewername, age, reviewtext, contact) {
+            const tableBody = document.getElementById("likedReviewsTableBody");
+
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${reviewername}</td>
+                <td>${age}</td>
+                <td>${reviewtext}</td>
+                <td>${contact}</td>
+                <td>
+                    <button onclick="thumbsDown('${reviewername}')">&#x1f44e;</button>
+                </td>
+            `;
+
+            tableBody.appendChild(row);
+        }
+
+        function initializeTable() {
+            $('#reviewTable').DataTable({
+                columnDefs: [{
+                    targets: 3,
+                    type: 'html',
+                    render: function (data, type, row) {
+                        return data;
+                    }
+                }]
+            });
+
+            $('#likedReviewsTable').DataTable({
+                columnDefs: [{
+                    targets: 4,
+                    type: 'html',
+                    render: function (data, type, row) {
+                        return data;
+                    }
+                }],
+                order: [],
+                dom: 'Bfrtip',
+                buttons: ['copy', 'excel', 'pdf', 'print']
+            });
+        }
+
+        function thumbsUp(reviewername, age, reviewtext, contact) {
+            console.log(`Thumbs up for ${reviewername}`);
+
+            const rows = document.querySelectorAll('#reviewTableBody tr');
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+                const firstCell = row.querySelector('td:first-child');
+                if (firstCell.textContent.trim() === reviewername) {
+                    addLikedReviewRow(reviewername, age, reviewtext, contact);
+                    row.parentNode.removeChild(row);
+                    break;
+                }
             }
-          });
-    }
-    function addReview() {
-      const postOptions = {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'no-cors', // no-cors, *cors, same-origin
-        cache: 'default', // *default, no-cache, reload, force-cache, only-if-cached
-        // credentials: 'same-origin', // include, same-origin, omit
-        headers: {
-        'Content-Type': 'application/json'
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        };
-	// var problemData = new URLSearchParams();
-	// problemData.append(`problem`, document.getElementById("question").value);
-	// problemData.append(`Unit`, document.getElementById("unit").value);
-	// problemData.append(`Topic`, document.getElementById("topic").value);
-	// problemData.append(`Tags`, document.getElementById("tags").value);
-      var url = "https://dating.dontntntnt.de/api/review/add";
-      url += "?name=" + document.getElementById("reviewername").value;
-      url += "&Age=" + document.getElementById("age").value;
-      url += "&Review=" + document.getElementById("reviewtext").value;
-      url += "&Contact=" + document.getElementById("contact").value;
-	// fetch the API
-	  fetch(url, postOptions)
-	// response is a RESTful "promise" on any successful fetch
-	  .then(response => {
-	// check for response errors
-	  if (response.status !== 200) {
-		  error("PUT API response failure: " + response.status)
-		  return;  // api failure
-	  }
-	// valid response will have JSON data
-	  response.json().then(data => {
-		console.log(data);
-	  })
-	  })
-	// catch fetch errors (ie Nginx ACCESS to server blocked)
-	.catch(err => {
-	console.log(err + " ");
-	});
-  }
-  function addTableRow(reviewername, age, reviewtext, contact) {
-      let tableRow = document.createElement("tr");
-      let reviewernameCell = document.createElement("td");
-      reviewernameCell.innerText = reviewername;
-      tableRow.appendChild(reviewernameCell);
-      let ageCell = document.createElement("td");
-      ageCell.innerText = age;
-      tableRow.appendChild(ageCell);
-      let reviewtextCell = document.createElement("td");
-      reviewtextCell.innerText = reviewtext;
-      tableRow.appendChild(reviewtextCell);
-      let contactCell = document.createElement("td");
-      contactCell.innerText = contact;
-      tableRow.appendChild(contactCell);
-      document.getElementById("reviewTable").appendChild(tableRow);
-    }
-    function removeTableRows() {
-      let numRows = document.getElementById("reviewTable").rows.length;
-      for (let i = numRows - 1; i > 0; i--) {
-        document.getElementById("reviewTable").removeChild(document.getElementById("reviewTable").rows[i]);
-      }
-    }
-  </script>  
+
+            likedReviews.push(reviewername);
+        }
+
+        function thumbsDown(reviewername) {
+            // Handle thumbs down action for the match with the given name
+            console.log(`Thumbs down for ${reviewername}`);
+        }
+
+        refreshTable(); // Call the refreshTable() function initially to populate the table
+    </script>
+</body>
+</html>
 </section>
