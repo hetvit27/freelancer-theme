@@ -33,6 +33,7 @@
           <input id="age" placeholder="age">
           <input id="location" placeholder="location">
           <input id="pronouns" placeholder="pronouns">
+          <input id="socials" placeholder="socials">
           <button onclick="addMatch()">Save</button>
           <br>
           <br>
@@ -44,6 +45,7 @@
                       <th>Age</th>
                       <th>Location</th>
                       <th>Pronouns</th>
+                      <th>Socials</th>
                       <th>Actions</th>
                   </tr>
               </thead>
@@ -58,6 +60,7 @@
                       <th>Age</th>
                       <th>Location</th>
                       <th>Pronouns</th>
+                      <th>Socials</th>
                       <th>Actions</th>
                   </tr>
               </thead>
@@ -91,7 +94,7 @@
                           tableBody.innerHTML = ""; // Clear the table body before populating new data
 
                           for (let i = 0; i < data.length; i++) {
-                              addMatchRow(data[i].name, data[i].age, data[i].location, data[i].pronouns);
+                              addMatchRow(data[i].name, data[i].age, data[i].location, data[i].pronouns, data[i].socials);
                           }
 
                           initializeTable();
@@ -112,6 +115,7 @@
                   url += "&age=" + encodeURIComponent(document.getElementById("age").value);
                   url += "&location=" + encodeURIComponent(document.getElementById("location").value);
                   url += "&pronouns=" + encodeURIComponent(document.getElementById("pronouns").value);
+                  url += "&socials=" + encodeURIComponent(document.getElementById("socials").value);
 
                   fetch(url, postOptions)
                       .then(response => {
@@ -129,7 +133,7 @@
                       });
               }
 
-              function addMatchRow(name, age, location, pronouns) {
+              function addMatchRow(name, age, location, pronouns, socials) {
                   const tableBody = document.getElementById("matchTableBody");
 
                   const row = document.createElement("tr");
@@ -138,8 +142,9 @@
                       <td>${age}</td>
                       <td>${location}</td>
                       <td>${pronouns}</td>
+                      <td>${socials}</td>
                       <td>
-                          <button onclick="thumbsUp('${name}', '${age}', '${location}', '${pronouns}')">&#x1f44d;</button>
+                          <button onclick="thumbsUp('${name}', '${age}', '${location}', '${pronouns}', '${socials}')">&#x1f44d;</button>
                           <button onclick="thumbsDown('${name}')">&#x1f44e;</button>
                       </td>
                   `;
@@ -147,7 +152,7 @@
                   tableBody.appendChild(row);
               }
 
-              function addLikedMatchRow(name, age, location, pronouns) {
+              function addLikedMatchRow(name, age, location, pronouns, socials) {
                   const tableBody = document.getElementById("likedMatchesTableBody");
 
                   const row = document.createElement("tr");
@@ -156,6 +161,7 @@
                       <td>${age}</td>
                       <td>${location}</td>
                       <td>${pronouns}</td>
+                      <td>${socials}</td>
                       <td>
                           <button onclick="thumbsDown('${name}')">&#x1f44e;</button>
                       </td>
