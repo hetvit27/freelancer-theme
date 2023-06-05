@@ -1,3 +1,4 @@
+<section> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +28,6 @@
                 <th>Age</th>
                 <th>Location</th>
                 <th>Pronouns</th>
-                <th>Socials</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -124,7 +124,6 @@
                 <td>${age}</td>
                 <td>${location}</td>
                 <td>${pronouns}</td>
-                <td><input id="${name}_socials" placeholder="socials"></td>
                 <td>
                     <button onclick="thumbsUp('${name}', '${age}', '${location}', '${pronouns}')">&#x1f44d;</button>
                     <button onclick="thumbsDown('${name}')">&#x1f44e;</button>
@@ -155,21 +154,15 @@
         function initializeTable() {
             $('#matchTable').DataTable({
                 columnDefs: [{
-                    targets: 3,
-                    type: 'html',
-                    render: function (data, type, row) {
-                        return data;
-                    }
+                    targets: [3],
+                    visible: false
                 }]
             });
 
             $('#likedMatchesTable').DataTable({
                 columnDefs: [{
-                    targets: 4,
-                    type: 'html',
-                    render: function (data, type, row) {
-                        return data;
-                    }
+                    targets: [4],
+                    visible: true
                 }],
                 order: [],
                 dom: 'Bfrtip',
@@ -205,3 +198,4 @@
     </script>
 </body>
 </html>
+</section>
