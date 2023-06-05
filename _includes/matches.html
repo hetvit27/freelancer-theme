@@ -45,7 +45,6 @@
                       <th>Age</th>
                       <th>Location</th>
                       <th>Pronouns</th>
-                      <th>Socials</th>
                       <th>Actions</th>
                   </tr>
               </thead>
@@ -94,7 +93,7 @@
                           tableBody.innerHTML = ""; // Clear the table body before populating new data
 
                           for (let i = 0; i < data.length; i++) {
-                              addMatchRow(data[i].name, data[i].age, data[i].location, data[i].pronouns, data[i].socials);
+                              addMatchRow(data[i].name, data[i].age, data[i].location, data[i].pronouns);
                           }
 
                           initializeTable();
@@ -133,7 +132,7 @@
                       });
               }
 
-              function addMatchRow(name, age, location, pronouns, socials) {
+              function addMatchRow(name, age, location, pronouns) {
                   const tableBody = document.getElementById("matchTableBody");
 
                   const row = document.createElement("tr");
@@ -142,9 +141,8 @@
                       <td>${age}</td>
                       <td>${location}</td>
                       <td>${pronouns}</td>
-                      <td>${socials}</td>
                       <td>
-                          <button onclick="thumbsUp('${name}', '${age}', '${location}', '${pronouns}', '${socials}')">&#x1f44d;</button>
+                          <button onclick="thumbsUp('${name}', '${age}', '${location}', '${pronouns}')">&#x1f44d;</button>
                           <button onclick="thumbsDown('${name}')">&#x1f44e;</button>
                       </td>
                   `;
@@ -195,7 +193,7 @@
                   });
               }
 
-              function thumbsUp(name) {
+              function thumbsUp(name, age, location, pronouns) {
                   console.log(`Thumbs up for ${name}`);
 
                   const rows = document.querySelectorAll('#matchTableBody tr');
