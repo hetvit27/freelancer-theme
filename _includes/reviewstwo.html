@@ -34,14 +34,6 @@
         font-size: 18px;
       }
 
-      .question-container {
-        display: none;
-      }
-
-      .question-container:first-child {
-        display: block;
-      }
-
       .progress-bar {
         background-color: #ddd;
         height: 20px;
@@ -63,7 +55,7 @@
     </div>
 
     <form id="quiz-form">
-      <div class="question-container" style="display:block">
+      <div class="question-container">
         <h2>Question 1:</h2>
         <p>Which gesture would make you feel most loved?</p>
         <div><label><input type="radio" name="q1" value="words"> Compliments and kind words</label></div>
@@ -71,10 +63,9 @@
         <div><label><input type="radio" name="q1" value="gifts"> Receiving thoughtful gifts</label></div>
         <div><label><input type="radio" name="q1" value="acts-of-service"> Acts of service and help</label></div>
         <div><label><input type="radio" name="q1" value="physical-touch"> Physical touch and affection</label></div>
-        <button onclick="showNextQuestion()" class="next-button" type="button">Next</button>
       </div>
 
-      <div class="question-container" style="display:none">
+      <div class="question-container">
         <h2>Question 2:</h2>
         <p>What makes you feel most appreciated?</p>
         <div><label><input type="radio" name="q2" value="words"> Words of affirmation and encouragement</label></div>
@@ -82,10 +73,9 @@
         <div><label><input type="radio" name="q2" value="gifts"> Receiving thoughtful and meaningful gifts</label></div>
         <div><label><input type="radio" name="q2" value="acts-of-service"> Acts of service and help with tasks</label></div>
         <div><label><input type="radio" name="q2" value="physical-touch"> Physical touch and affectionate gestures</label></div>
-        <button onclick="showNextQuestion()" class="next-button" type="button">Next</button>
       </div>
 
-      <div class="question-container" style="display:none">
+      <div class="question-container">
         <h2>Question 3:</h2>
         <p>How do you typically express love to others?</p>
         <div><label><input type="radio" name="q3" value="words"> Through words of affirmation and praise</label></div>
@@ -93,10 +83,9 @@
         <div><label><input type="radio" name="q3" value="gifts"> By giving thoughtful and meaningful gifts</label></div>
         <div><label><input type="radio" name="q3" value="acts-of-service"> Through acts of service and helping with tasks</label></div>
         <div><label><input type="radio" name="q3" value="physical-touch"> By showing physical affection and touch</label></div>
-        <button onclick="showNextQuestion()" class="next-button" type="button">Next</button>
       </div>
 
-      <button class="submit-button" type="submit" style="display: none;"> Submit <span>&#x2665;</span>
+      <button class="submit-button" type="submit"> Submit <span>&#x2665;</span>
       </button>
       
     </form>
@@ -203,26 +192,20 @@
       function showNextQuestion() {
         const questionContainers = document.querySelectorAll(".question-container");
 
-      for (let i = 0; i < questionContainers.length; i++) {
-        if (questionContainers[i].style.display === "block") {
-          questionContainers[i].style.display = "none";
-          questionContainers[i + 1].style.display = "block";
+        for (let i = 0; i < questionContainers.length; i++) {
+          questionContainers[i].style.display = "block";
 
           const progressBarFill = document.getElementById("progress-bar-fill");
-          progressBarFill.style.width = ((i + 2) / questionContainers.length) * 100 + "%";
-          break;
+          progressBarFill.style.width = ((i + 1) / questionContainers.length) * 100 + "%";
         }
-      }
 
-      const nextButton = document.querySelector(".next-button");
-      const submitButton = document.querySelector(".submit-button");
+        const nextButton = document.querySelector(".next-button");
+        const submitButton = document.querySelector(".submit-button");
 
-      const currentQuestionContainer = document.querySelector(".question-container[style='display: block;']");
-      if (currentQuestionContainer === questionContainers[questionContainers.length - 2]) {
         nextButton.style.display = "none";
         submitButton.style.display = "block";
       }
-    } 
+
       // Attach form submission event listener
       const quizForm = document.getElementById("quiz-form");
       quizForm.addEventListener("submit", handleSubmit);
@@ -234,5 +217,5 @@
       }
     </script>
   </body>
-  </html>
+</html>
 </section>
