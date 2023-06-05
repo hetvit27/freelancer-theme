@@ -57,51 +57,87 @@
     </style>
   </head>
   <body>
-    <h1>Romantic Love Language Quiz</h1>
+    <h1>Love Language Quiz</h1>
     <div class="progress-bar">
       <div class="progress-bar-fill" id="progress-bar-fill"></div>
     </div>
-  
+
     <form id="quiz-form">
       <div class="question-container" style="display:block">
         <h2>Question 1:</h2>
-        <p>Which romantic gesture would make you feel most loved?</p>
-        <label><input type="radio" name="q1" value="words"> Sweet love letters and heartfelt messages</label>
-        <label><input type="radio" name="q1" value="quality-time"> Candlelit dinners and romantic getaways</label>
-        <label><input type="radio" name="q1" value="gifts"> Thoughtful surprises and meaningful presents</label>
-        <label><input type="radio" name="q1" value="acts-of-service"> Acts of kindness and personalized favors</label>
-        <label><input type="radio" name="q1" value="physical-touch"> Tender caresses and passionate embraces</label>
+        <p>Which gesture would make you feel most loved?</p>
+        <label><input type="radio" name="q1" value="words"> Compliments and kind words</label>
+        <label><input type="radio" name="q1" value="quality-time"> Spending quality time together</label>
+        <label><input type="radio" name="q1" value="gifts"> Receiving thoughtful gifts</label>
+        <label><input type="radio" name="q1" value="acts-of-service"> Acts of service and help</label>
+        <label><input type="radio" name="q1" value="physical-touch"> Physical touch and affection</label>
         <button onclick="showNextQuestion()" class="next-button" type="button">Next</button>
       </div>
-  
+
       <div class="question-container" style="display:none">
         <h2>Question 2:</h2>
-        <p>What romantic gesture makes you feel most appreciated?</p>
-        <label><input type="radio" name="q2" value="words"> Love notes and heartfelt compliments</label>
-        <label><input type="radio" name="q2" value="quality-time"> Quality time and undivided attention</label>
-        <label><input type="radio" name="q2" value="gifts"> Romantic surprises and meaningful presents</label>
-        <label><input type="radio" name="q2" value="acts-of-service"> Acts of service and thoughtful favors</label>
-        <label><input type="radio" name="q2" value="physical-touch"> Physical affection and tender touches</label>
+        <p>What makes you feel most appreciated?</p>
+        <label><input type="radio" name="q2" value="words"> Words of affirmation and encouragement</label>
+        <label><input type="radio" name="q2" value="quality-time"> Undivided attention and quality time</label>
+        <label><input type="radio" name="q2" value="gifts"> Receiving thoughtful and meaningful gifts</label>
+        <label><input type="radio" name="q2" value="acts-of-service"> Acts of service and help with tasks</label>
+        <label><input type="radio" name="q2" value="physical-touch"> Physical touch and affectionate gestures</label>
         <button onclick="showNextQuestion()" class="next-button" type="button">Next</button>
       </div>
-  
+
       <div class="question-container" style="display:none">
         <h2>Question 3:</h2>
-        <p>How do you typically express romantic love to your partner?</p>
-        <label><input type="radio" name="q3" value="words"> Through romantic words and love declarations</label>
-        <label><input type="radio" name="q3" value="quality-time"> By creating beautiful memories and shared experiences</label>
-        <label><input type="radio" name="q3" value="gifts"> By giving romantic surprises and thoughtful tokens of affection</label>
-        <label><input type="radio" name="q3" value="acts-of-service"> Through acts of devotion and personalized gestures</label>
-        <label><input type="radio" name="q3" value="physical-touch"> By showing physical closeness and affectionate gestures</label>
+        <p>How do you typically express love to others?</p>
+        <label><input type="radio" name="q3" value="words"> Through words of affirmation and praise</label>
+        <label><input type="radio" name="q3" value="quality-time"> By spending quality time and giving undivided attention</label>
+        <label><input type="radio" name="q3" value="gifts"> By giving thoughtful and meaningful gifts</label>
+        <label><input type="radio" name="q3" value="acts-of-service"> Through acts of service and helping with tasks</label>
+        <label><input type="radio" name="q3" value="physical-touch"> By showing physical affection and touch</label>
         <button onclick="showNextQuestion()" class="next-button" type="button">Next</button>
       </div>
-  
-      <button class="submit-button" type="submit" style="display: none;">Submit</button>
+
+      <button class="submit-button" type="submit" style="display: none;"><span>&#10084;</span></button>
     </form>
-  
+
     <div id="result" style="display: none;">
-      <h2>Your Romantic Love Language:</h2
-  
+      <h2>Your Love Language:</h2>
+      <p id="love-language-text"></p>
+    </div>
+
+    <script>
+      // Questions and their love language mappings
+      const questions = [
+        {
+          question: "Which gesture would make you feel most loved?",
+          answers: {
+            words: "words",
+            "quality-time": "quality-time",
+            gifts: "gifts",
+            "acts-of-service": "acts-of-service",
+            "physical-touch": "physical-touch"
+          }
+        },
+        {
+          question: "What makes you feel most appreciated?",
+          answers: {
+            words: "words",
+            "quality-time": "quality-time",
+            gifts: "gifts",
+            "acts-of-service": "acts-of-service",
+            "physical-touch": "physical-touch"
+          }
+        },
+        {
+          question: "How do you typically express love to others?",
+          answers: {
+            words: "words",
+            "quality-time": "quality-time",
+            gifts: "gifts",
+            "acts-of-service": "acts-of-service",
+            "physical-touch": "physical-touch"
+          }
+        }
+      ];
 
       // Love languages and their descriptions
       const loveLanguages = {
