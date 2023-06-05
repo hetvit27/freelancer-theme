@@ -181,7 +181,7 @@
 
                   $('#likedMatchesTable').DataTable({
                       columnDefs: [{
-                          targets: 3,
+                          targets: 4,
                           type: 'html',
                           render: function (data, type, row) {
                               return data;
@@ -201,7 +201,8 @@
                       const row = rows[i];
                       const firstCell = row.querySelector('td:first-child');
                       if (firstCell.textContent.trim() === name) {
-                          document.getElementById("likedMatchesTableBody").appendChild(row.cloneNode(true));
+                          const socials = document.getElementById("socials").value;
+                          addLikedMatchRow(name, age, location, pronouns, socials);
                           row.parentNode.removeChild(row);
                           break;
                       }
