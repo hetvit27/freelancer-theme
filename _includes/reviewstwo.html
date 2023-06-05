@@ -200,9 +200,8 @@
         resultDiv.style.display = "block";
       }
 
-      // Function to show next question
       function showNextQuestion() {
-      const questionContainers = document.querySelectorAll(".question-container");
+        const questionContainers = document.querySelectorAll(".question-container");
 
       for (let i = 0; i < questionContainers.length; i++) {
         if (questionContainers[i].style.display === "block") {
@@ -223,11 +222,7 @@
         nextButton.style.display = "none";
         submitButton.style.display = "block";
       }
-    }
-
-
-
-
+    } 
       // Attach form submission event listener
       const quizForm = document.getElementById("quiz-form");
       quizForm.addEventListener("submit", handleSubmit);
