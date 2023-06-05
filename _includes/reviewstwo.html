@@ -66,33 +66,35 @@
       <div class="question-container" style="display:block">
         <h2>Question 1:</h2>
         <p>Which gesture would make you feel most loved?</p>
-        <label><input type="radio" name="q1" value="words"> Compliments and kind words</label>
-        <label><input type="radio" name="q1" value="quality-time"> Spending quality time together</label>
-        <label><input type="radio" name="q1" value="gifts"> Receiving thoughtful gifts</label>
-        <label><input type="radio" name="q1" value="acts-of-service"> Acts of service and help</label>
-        <label><input type="radio" name="q1" value="physical-touch"> Physical touch and affection</label>
+        <label><input type="radio" name="q1" value="words"> Compliments and kind words<br></label>
+        <label><input type="radio" name="q1" value="quality-time"> Spending quality time together<br></label>
+        <label><input type="radio" name="q1" value="gifts"> Receiving thoughtful gifts<br></label>
+        <label><input type="radio" name="q1" value="acts-of-service"> Acts of service and help<br></label>
+        <label><input type="radio" name="q1" value="physical-touch"> Physical touch and affection<br></label>
         <button onclick="showNextQuestion()" class="next-button" type="button">Next</button>
       </div>
 
       <div class="question-container" style="display:none">
         <h2>Question 2:</h2>
         <p>What makes you feel most appreciated?</p>
-        <label><input type="radio" name="q2" value="words"> Words of affirmation and encouragement</label>
-        <label><input type="radio" name="q2" value="quality-time"> Undivided attention and quality time</label>
-        <label><input type="radio" name="q2" value="gifts"> Receiving thoughtful and meaningful gifts</label>
-        <label><input type="radio" name="q2" value="acts-of-service"> Acts of service and help with tasks</label>
-        <label><input type="radio" name="q2" value="physical-touch"> Physical touch and affectionate gestures</label>
+        <label><input type="radio" name="q2" value="words"> Words of affirmation and encouragement<br></label>
+        <label><input type="radio" name="q2" value="quality-time"> Undivided attention and quality time<br></label>
+        <label><input type="radio" name="q2" value="gifts"> Receiving thoughtful and meaningful gifts<br></label>
+        <label><input type="radio" name="q2" value="acts-of-service"> Acts of service and help with tasks<br></label>
+        <label><input type="radio" name="q2" value="physical-touch"> Physical touch and affectionate gestures<br></label>
+
         <button onclick="showNextQuestion()" class="next-button" type="button">Next</button>
       </div>
 
       <div class="question-container" style="display:none">
         <h2>Question 3:</h2>
         <p>How do you typically express love to others?</p>
-        <label><input type="radio" name="q3" value="words"> Through words of affirmation and praise</label>
-        <label><input type="radio" name="q3" value="quality-time"> By spending quality time and giving undivided attention</label>
-        <label><input type="radio" name="q3" value="gifts"> By giving thoughtful and meaningful gifts</label>
-        <label><input type="radio" name="q3" value="acts-of-service"> Through acts of service and helping with tasks</label>
-        <label><input type="radio" name="q3" value="physical-touch"> By showing physical affection and touch</label>
+        <label><input type="radio" name="q3" value="words"> Through words of affirmation and praise<br></label>
+        <label><input type="radio" name="q3" value="quality-time"> By spending quality time and giving undivided attention<br></label>
+        <label><input type="radio" name="q3" value="gifts"> By giving thoughtful and meaningful gifts<br></label>
+        <label><input type="radio" name="q3" value="acts-of-service"> Through acts of service and helping with tasks<br></label>
+        <label><input type="radio" name="q3" value="physical-touch"> By showing physical affection and touch<br></label>
+
         <button onclick="showNextQuestion()" class="next-button" type="button">Next</button>
       </div>
 
@@ -199,7 +201,7 @@
 
         resultDiv.style.display = "block";
       }
-      
+
       // Function to show next question
       function showNextQuestion() {
         const questionContainers = document.querySelectorAll(".question-container");
