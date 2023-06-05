@@ -96,7 +96,9 @@
         <button onclick="showNextQuestion()" class="next-button" type="button">Next</button>
       </div>
 
-      <button class="submit-button" type="submit" style="display: none;"><span>&#10084;</span></button>
+      <button class="submit-button" type="submit" style="display: none;"> Submit <span>&#x2665;</span>
+      </button>
+      
     </form>
 
     <div id="result" style="display: none;">
@@ -197,9 +199,9 @@
 
         resultDiv.style.display = "block";
       }
-
-       // Function to show next question
-       function showNextQuestion() {
+      
+      // Function to show next question
+      function showNextQuestion() {
         const questionContainers = document.querySelectorAll(".question-container");
 
         for (let i = 0; i < questionContainers.length; i++) {
@@ -222,6 +224,7 @@
           submitButton.style.display = "block";
         }
       }
+
 
 
       // Attach form submission event listener
