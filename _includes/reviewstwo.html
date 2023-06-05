@@ -208,7 +208,7 @@
             questionContainers[i + 1].style.display = "block";
 
             const progressBarFill = document.getElementById("progress-bar-fill");
-            progressBarFill.style.width = ((i + 1) / questionContainers.length) * 100 + "%";
+            progressBarFill.style.width = ((i + 2) / questionContainers.length) * 100 + "%";
             break;
           }
         }
@@ -216,7 +216,8 @@
         const nextButton = document.querySelector(".next-button");
         const submitButton = document.querySelector(".submit-button");
 
-        if (document.querySelectorAll(".question-container:last-child")[0].style.display === "block") {
+        const currentQuestionContainer = document.querySelector(".question-container[style='display: block;']");
+        if (currentQuestionContainer === document.querySelectorAll(".question-container")[questionContainers.length - 2]) {
           nextButton.style.display = "none";
           submitButton.style.display = "block";
         }
