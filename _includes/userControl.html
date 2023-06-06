@@ -137,12 +137,19 @@
     <div id="profile">
       <div>
         <h1>Profile</h1>
+        <h3>Important Details</h3>
         <table>
           <tr>
-            Profile Detail
+            <th>Name</th>
+            <th>Age</th>
+            <th>Profile Image</th>
           </tr>
+        </table>
+        <br />
+        <table>
           <tr>
-            Response
+            <th>Profile Detail</th>
+            <th>Response</th>
           </tr>
         </table>
       </div>
@@ -152,6 +159,8 @@
     </div>
   </html>
   <script>
+    function generateProfileView() {}
+
     // show login, hide signup
     function loginPage() {
       document.getElementById("signup").style.display = "none";
